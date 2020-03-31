@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+  <p>
+    <h1>Laboratoire 1</h1>
+    <h3>Convertion sur 32 bits (précision simple)</h3>
+    <label for="inputNumber">Input number : </label>
+    <input type="text" id="inputNumber" name="inputNumber" value="">
+    <button type="button" name="transformInput" onclick="transformInput();">Transform</button>
+
+  </p>
+  <p>
+    <table id="mainCheckboxTable" border="1">
+      <tr>
+        <th>Sign</th>
+        <th>Exponent</th>
+        <th>Mantissa</th>
+      </tr>
+    </table>
+  </p>
+  <h3>Somme de deux nombres floatants</h3>
+  <p>
+    <label for="firstNumber">Premier nombre: </label>
+    <input type="text" id="firstNumber" name="firstNumber" value="">
+    <table id="aCheckboxTable" border="1">
+      <tr>
+        <th>Sign</th>
+        <th>Exponent</th>
+        <th>Mantissa</th>
+      </tr>
+    </table>
+  </p>
+  <p>
+    <label for="secondNumber">Deuxième nombre : </label>
+    <input type="text" id="secondNumber" name="secondNumber" value="">
+    <button type="button" name="transformInput" onclick="computeInput();">Compute</button>
+    <table id="bCheckboxTable" border="1">
+      <tr>
+        <th>Sign</th>
+        <th>Exponent</th>
+        <th>Mantissa</th>
+      </tr>
+    </table>
+  </p>
+  <p>
+    <div id="result" name="result">Result :</div>
+    <table id="resultCheckboxTable" border="1">
+      <tr>
+        <th>Sign</th>
+        <th>Exponent</th>
+        <th>Mantissa</th>
+      </tr>
+    </table>
+  </p>
+  </body>
+   <!--Include operations and convertion natural numbers-->
+   <script src="IntegerOperations.js" charset="utf-8"></script>
+   <!--Include operations and convertion for real numbers-->
+   <script src="RealOperations.js" charset="utf-8"></script>
+   <!-- main script-->
+  <script src="index.js" charset="utf-8"></script>
+</html>

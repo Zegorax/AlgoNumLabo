@@ -1,0 +1,77 @@
+<script type="text/javascript" src="IntegerOperations.js"></script>
+<script type="text/javascript" src="RealOperations.js">
+
+</script>
+<script type="text/javascript">
+//Some values for debuging... (8 bits)
+
+plus1 = [false, false, false, false,    false, false, false, true]
+minus1 = [true, true, true, true,       true, true, true, true]
+
+plus5 = [false, false, false, false,    false, true, false, true]
+minus5 = [true, true, true, true,       true, false, true, true]
+plus4 = [false, false, false, false,    false, true, false, false]
+minus4 = [true, true, true, true,       true, true, false, false]
+
+plus9 = [false, false, false, false,    true, false, false, true]
+minus9 = [true, true, true, true,       false, true, true, true]
+
+/*
+//Assertions
+    //complements and convertion
+        console.log("convertion : ")
+        //Second complements
+        console.log("2's  " + compare(TwoSComplement(plus5),minus5))
+        console.log("2's " + compare(TwoSComplement(plus4), minus4))
+
+        //dec to bin
+        console.log(compare(plus1, DecimalToSignedBin(1, 8)))
+        console.log(compare(minus1, DecimalToSignedBin(-1, 8)))
+        console.log(compare(plus9, DecimalToSignedBin(9, 8)))
+        console.log(compare(minus9, DecimalToSignedBin(-9, 8)),)
+
+        //bin to dec
+        console.log(1 == SignedBinToDecimal(plus1))
+        console.log(-1 == SignedBinToDecimal(minus1))
+        console.log(9 == SignedBinToDecimal(plus9))
+        console.log(-9 == SignedBinToDecimal(minus9))
+
+    //sum and sub
+        console.log("sum and subs")
+        //Sum of pos values
+        console.log(compare(sumOfSignedIntegerBinaryValues(plus5, plus4),sumOfSignedIntegerBinaryValues(plus4, plus5)) && compare(sumOfSignedIntegerBinaryValues(plus5, plus4)['res'], plus9))
+
+        //sum of neg
+        console.log(compare(sumOfSignedIntegerBinaryValues(minus5, minus4),sumOfSignedIntegerBinaryValues(minus4, minus5)) && compare(sumOfSignedIntegerBinaryValues(minus5, minus4)['res'], minus9))
+
+        //sum of pos and neg
+        console.log(compare(sumOfSignedIntegerBinaryValues(plus5, minus4)['res'], plus1) && compare(sumOfSignedIntegerBinaryValues(minus4, plus5)['res'], plus1))
+        console.log(compare(subOfSignedIntegerBinaryValues(plus4, minus5)['res'], plus9) && compare(subOfSignedIntegerBinaryValues(minus5, plus4)['res'], minus9  ))
+
+        //Sub of pos values
+        console.log(compare(subOfSignedIntegerBinaryValues(plus5, plus4)['res'], plus1))
+        console.log(compare(subOfSignedIntegerBinaryValues(plus4, plus5)['res'], minus1))
+
+        //sub of neg
+        console.log(compare(subOfSignedIntegerBinaryValues(minus5, minus4)['res'], minus1))
+        console.log(compare(subOfSignedIntegerBinaryValues(minus4, minus5)['res'], plus1))
+
+        //sub of pos and neg
+        console.log(compare(subOfSignedIntegerBinaryValues(plus5, minus4)['res'], plus9))
+        console.log(compare(subOfSignedIntegerBinaryValues(minus4, plus5)['res'], minus9))
+        console.log(compare(subOfSignedIntegerBinaryValues(plus4, minus5)['res'], plus9))
+        console.log(compare(subOfSignedIntegerBinaryValues(minus5, plus4)['res'], minus9))
+*/
+    //Floating points operations
+    onePointOneTwoFive = RealToBinary(1.125, 4, 3)
+    onePointFive = RealToBinary(1.5, 4, 3)
+    onePointSevenFive = RealToBinary(1.75, 4, 3)
+    twoPointSixTwoFive = RealToBinary(2.625, 4, 3)
+    threePointTwoFive = RealToBinary(3.25, 4, 3)
+        //Sum of pos, same expo
+        //console.log(compare(sumOfRealBinaryValues(onePointFive, onePointSevenFive, 4, 3), twoPointSixTwoFive))
+        //console.log(onePointFive, 4, 3, RealToBinary(onePointSevenFive,4,3), RealToBinary(twoPointSixTwoFive,4,3))
+        console.log(RealToBinary(-1.25,4,3), subOfRealBinaryValues(onePointFive, onePointSevenFive, 4, 3))
+        //console.log(sumOfRealBinaryValues(onePointFive, onePointSevenFive, 4, 3))
+
+</script>
