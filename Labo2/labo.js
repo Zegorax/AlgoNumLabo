@@ -1,3 +1,10 @@
+/*
+Algorithmes Numériques
+Laboratoire #2 : Résolution d'équation
+Equipe 1 : Verardo Luca, Portmann Alexis, Marty Mathias
+Date de développement : 23.03.2020
+*/
+
 
 var chart;
 var xTab;

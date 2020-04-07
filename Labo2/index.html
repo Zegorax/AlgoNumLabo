@@ -9,8 +9,10 @@
 </head>
 <body>
   <div class="app">
-    <h1>Algorithmes Numériques</h1>
-    <h2>Laboratoire #2</h2>
+      <h1>Algorithmes Numériques</h1>
+      <h2>Laboratoire #2 : Résolution d'équation</h2>
+      <h3>Equipe 1 : Verardo Luca, Portmann Alexis, Marty Mathias</h3>
+      <h3>Date de développement : 23.03.2020</h3>
 
     <div style="margin: 0 0 10px 0;">
       <select class="select select-primary select-block mbl" name="functionSelector" onchange="parseFunction(); updateGraphData();" id="functionSelector">
@@ -20,7 +22,7 @@
         <option value="f4">(1+0.9cos(8x))(1+0.1cos(24x))(0.9+0.05cos(200x))(1+sin(x))</option>
         <option value="f5">sin(2 sin(2 sin(2 sin(x))))</option>
       </select>
-      
+
       <p>
         <label>\(f(x)\) =
           <input type="text" id="addFunctionBox">
@@ -53,30 +55,33 @@
   </div>
 
   <div class="rapport">
-
-      <h3>Rapport</h3>
-
-      <h4>Introduction</h4>
-      <p>
-          Le but de ce laboratoire est de développer un programme présentant une des trois méthodes (dichotomie, tangente et point fixe) pour trouver les solutions des fonctions ci-dessous de -100 à 100. Nous avons choisi la méthode de la tangente.
-      </p>
-
-      <h4>Utilisation</h4>
+      <h3>Utilisation</h3>
       <p>
           Choisir la fonction dont on veut trouver les zéros avec la liste déroulante verte. Le tracé de la fonction s'affiche en rouge sur le graphe.</br>
           Pour calculer les zéros de la fonction, cliquer sur le bouton 'Calculer les zéros'. Les zéros de la fonctions s'affichent en liste à puces au dessus du bouton. Les intervalles utilisés pour calculer la tangente en chaque zéros sont indiqués en rose sur le graphe.
           Il est possible d'ajouter des fonctions à votre guise, qui seront ensuite affichées avec leur zéros.
       </p>
+      <h3>Rapport</h3>
 
-
-      <h4>Fonctionnement</h4>
+      <h4>Contexte</h4>
       <p>
-          Au lieu de demander les x<sub>0</sub> à l'utilisateur, le programme parcourt la fonction sur l'intervalle qui est donné et détecte à quel(s) endroit(s) elle change de signe. Ensuite ces zéros sont envoyés à la fonction qui fait le calcul de la tangente de Newton. Cette fonction va alors calculer la tangente avec les points juste avant ou ces points-là, ce qui va retourner obligatoirement le zéro qui est le plus proche.
+          Le but de ce laboratoire est de développer un programme présentant une des trois méthodes (dichotomie, tangente et point fixe) pour trouver les solutions des fonctions ci-dessous de -100 à 100. Nous avons choisi la méthode de la tangente.
+      </p>
+      <h4>Méthode</h4>
+      <p>
+          Au lieu de demander les x<sub>0</sub> à l'utilisateur, le programme parcourt la fonction sur l'intervalle qui est donné et détecte à quel(s) endroit(s) elle change de signe. Ensuite, ces zéros sont envoyés à la fonction qui fait le calcul de la tangente de Newton. Cette fonction va alors calculer la tangente avec les points juste avant ou ces points-là, ce qui va retourner obligatoirement le zéro qui est le plus proche. Pour calculer la tangente, on a besoin de la valeur de la dérivée aux points de tangence, pour ce faire on approxime cette valeur en divisant un petit saut vertical de la fonction par le petit saut horizontal correspondant.
+
       </p>
 
       <h4>Conclusion</h4>
       <p>
-          On voit que cette méthode d'approximation numérique fonctionne bien car les zéros trouvés sont très proches des zéros réels.
+          Cette méthode d'approximation peut converger très vite, et l’on évite beaucoup de cas problématiques grâce à notre première approche dichotomique des zéros.
+      </p>
+      <h4>Références</h4>
+      <p>
+          <a href="https://fr.wikipedia.org/wiki/M%C3%A9thode_de_Newton">Wikipedia</a>
+      </br>
+          <a href="https://cyberlearn.hes-so.ch/pluginfile.php/3189492/mod_resource/content/1/BSc2_AlgorithmesNumeriques_Chap2_v1-7-0.pdf">Chapitre 2 du cours</a>
       </p>
 
   </div>
