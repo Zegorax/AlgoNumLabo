@@ -8,18 +8,18 @@ function compute(fileName)
 	document.getElementById("loader").removeAttribute("hidden");
 	document.getElementById("result").innerHTML = 'X = <sup>t</sup>[...]';
 	document.getElementById("time").innerHTML = '...';
-	
-		
+
+
     //Load data
-    loadJSON(fileName, function(data){
-		
+    loadJSON("json/" + fileName, function(data){
+
         //Copy the data
         SIZE = 0;
         let A = [];
         let B = [];
 
-	
-        //Compute the mean of the execution time		
+
+        //Compute the mean of the execution time
         let sum = 0;
         for(let i = 0; i < iterationNb; i++)
         {
@@ -46,10 +46,10 @@ function compute(fileName)
 
         //Last perfom to compute the result
         let result = X(A, B, SIZE);
-		
+
 		//Stop loading
 		document.getElementById("loader").setAttribute("hidden","");
-		
+
 		//If result exists
 		if(result != null)
 		{
@@ -58,13 +58,13 @@ function compute(fileName)
 			result.forEach(x => {
 				str += x + ',';
 			});
-			
+
 			//Remove the last ','
 			str = str.slice(0,-1);
-			
+
 			//Show the result
 			document.getElementById("result").innerHTML = 'X = <sup>t</sup>[' + str + ']';
-			
+
 			//Show the compute time
 			document.getElementById("time").innerHTML = computeTime + ' ms en faisant la moyenne sur ' + iterationNb + ' iterations.';
 		}
@@ -76,11 +76,13 @@ function compute(fileName)
 }
 
 function X(A,B,SIZE)
-{	
+{
     let X = Array(SIZE);
-	
+
+	//Get the triangular matrix
 	let tmpMatrix = transformMatrix(A, B, SIZE);
-	
+
+	//Det = 0 case ....
     if(tmpMatrix == null)
 		return null;
 
@@ -96,20 +98,66 @@ function X(A,B,SIZE)
         X[n] = ((B[n] - sum) / tmpMatrix[n][n]);
     }
 
+	//If there is swap, change the X matrix
+
     return X;
 }
 
 function transformMatrix(A, B, SIZE)
 {
 	let tmpMatrix = [];
-		
+	let swapedLines = [];
+
     for(let n = 0; n < SIZE; n++)
     {
+		let l = n * SIZE;
+		let currentLine = A.slice(l, l + SIZE);
+		//IF the element on the diagonal equals 0, swap with another line !
+		if(currentLine[n] == 0)
+		{
+			//Find the first non null element on the same colomn
+			let find = false;
+			for(let i = n + 1; i < SIZE; i++)
+			{
+				if(A[i*SIZE + n] != 0) // [i,n] element of A
+				{
+					find = true;
+
+					//Copy current line in tmp
+					let tmp = currentLine.slice();
+
+					//Swap the current lign
+					currentLine = A.slice(i*SIZE, i*SIZE + SIZE);
+
+					//Change in the matrice A (with the old current line)
+					for(let j = 0; j < SIZE; j++)
+					{
+						A[i*SIZE + j ] = tmp[j];
+					}
+
+					//Change the matrice B
+					tmp = B[i];
+					B[i] = B[n];
+					B[n] = tmp;
+
+					//Add to the swap lines array
+					swapedLines.push([n,i]);
+
+					//Leave the for loop
+					break;
+				}
+			}
+
+			//If no swap (so one colomn is filled with 0 <=> det(A) = 0 <=> cannot find X <=> return null)
+			if(!find)
+			{
+				return null;
+			}
+		}
+
         if(n > 0)
         {
             //let currentLine = A[n];
-            let l = n * SIZE;
-			let currentLine = A.slice(l, l + SIZE);
 
             for(let s = 1; s <= n; s++)
             {
@@ -117,7 +165,7 @@ function transformMatrix(A, B, SIZE)
 
                 let factor = currentLine[s - 1] / L_n_s_1[s-1] ;
 
-                //Should be 0				
+                //Should be 0
                 for(let i = 0; i < s; i++)
                 {
                     currentLine[i] = 0;
@@ -136,16 +184,16 @@ function transformMatrix(A, B, SIZE)
         }
         else
         {
-            tmpMatrix.push(A.slice(0,SIZE));
+            tmpMatrix.push(currentLine);
         }
-		
-		//If one 0 on the diagonal, the det of A is 0, so we cannot find the X solutions
+
+		//If one 0 on the diagonal of the final matric, the det of A is 0, so we cannot find the X solutions
         if(tmpMatrix[n][n] == 0)
         {
             return null;
         }
     }
-	
+
 	return tmpMatrix;
 }
 

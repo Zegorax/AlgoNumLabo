@@ -6,22 +6,52 @@
     </head>
     <body>
 		<h1>Algorithmes numériques</h1>
-		<h2>Laboratoire #3 : TODO</h2>
+		<h2>Laboratoire #3 : Systèmes linéaires</h2>
 		<h2>Equipe 1 : Verardo Luca, Portmann Alexis, Marty Mathias</h2>
 		<h2>Date de développement : 18.04.2020</h2>
-		
+
 		<h3>Choisir une matrice</h3>
 		<button onclick='compute("Matrice_210x210.json")'>210x210</button>
 		<button onclick='compute("matrice_avecPB_3x3_avec_A_a_0.json")'>3x3 avec A = 0</button>
 		<button onclick='compute("matrice_avecPB_3x3_avec_SwapObligatoire.json")'>3x3 avec swap</button>
-		
+
 		<h3>Resultats</h3>
 		<div id="loader" hidden=""></div>
 		<p id="result">X ≈ <sup>t</sup>[...]</p>
-		
+
 		<h3>Temps de calcule</h3>
 		<p id="time">...</p>
-		
+
+        <div class="rapport">
+
+          <h3>Rapport</h3>
+
+          <h4>Introduction</h4>
+          <p>
+              Le but de ce laboratoire est de développer un programme permettant de résoudre des systèmes d'équations linéaires en JS.
+              Le défi est d'avoir le temps d'exécution le plus court possible.
+          </p>
+
+          <h4>Utilisation</h4>
+          <p>
+              Choisir la fonction dont on veut trouver les zéros avec la liste déroulante verte. Le tracé de la fonction s'affiche en rouge sur le graphe.</br>
+              Pour calculer les zéros de la fonction, cliquer sur le bouton 'Calculer les zéros'. Les zéros de la fonctions s'affichent en liste à puces au dessus du bouton. Les intervalles utilisés pour calculer la tangente en chaque zéros sont indiqués en rose sur le graphe.
+              Il est possible d'ajouter des fonctions à votre guise, qui seront ensuite affichées avec leur zéros.
+          </p>
+
+
+          <h4>Fonctionnement</h4>
+          <p>
+              Au lieu de demander les x<sub>0</sub> à l'utilisateur, le programme parcourt la fonction sur l'intervalle qui est donné et détecte à quel(s) endroit(s) elle change de signe. Ensuite ces zéros sont envoyés à la fonction qui fait le calcul de la tangente de Newton. Cette fonction va alors calculer la tangente avec les points juste avant ou ces points-là, ce qui va retourner obligatoirement le zéro qui est le plus proche.
+          </p>
+
+          <h4>Conclusion</h4>
+          <p>
+              On voit que cette méthode d'approximation numérique fonctionne bien car les zéros trouvés sont très proches des zéros réels.
+          </p>
+
+        </div>
+
 		<script type="text/javascript" src="js/main.js"></script>
     </body>
 </html>
