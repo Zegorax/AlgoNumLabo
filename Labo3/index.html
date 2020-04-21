@@ -34,8 +34,8 @@
 
           <h4>Utilisation</h4>
           <p>
-              Tout d’abord, il faut activer une option de sécurité dans Firefox pour pouvoir lire les fichiers de type JSON sur le disque. Ci-dessous, le lien pour faire cette modification.</br>
-              <a href="">Aller à l'option</a>
+              Tout d’abord, il faut activer l'option de sécurité "strict_origin_policy" dans Firefox pour pouvoir lire les fichiers de type JSON sur le disque. Ci-dessous, le lien pour faire cette modification:</br>
+              <a href="">Aller à l'option</a><br/>
               Les trois boutons permettant de (d’essayer) calculer la réponse au système d’équations linéaires proposé par le laboratoire. Le temps de calcul peut être long, car l’opération est répétée 1000 fois (paramétrable) pour calculer une moyenne sur le temps d’exécution.
               Pour utiliser le programme sur n’importe quel système linéaire :</br>
               <ul>
@@ -47,12 +47,13 @@
 
           <h4>Fonctionnement</h4>
           <p>
-              Au lieu de demander les x<sub>0</sub> à l'utilisateur, le programme parcourt la fonction sur l'intervalle qui est donné et détecte à quel(s) endroit(s) elle change de signe. Ensuite ces zéros sont envoyés à la fonction qui fait le calcul de la tangente de Newton. Cette fonction va alors calculer la tangente avec les points juste avant ou ces points-là, ce qui va retourner obligatoirement le zéro qui est le plus proche.
-          </p>
-
+              On commence par calculer la matrice triangulaire, pour ce faire on utilise la méthode du pivot de Gauss. On travaille ligne par ligne en commençant par en haut. Pour chaque ligne, on travail colonne par colonne pour arriver à la ligne finale.<br/>
+              Si on tombe sur un zéro sur la diagonale, on va « swaper » la ligne courante avec la première ligne  de la matrice telle que son élément sur la même colonne ne soit pas nul (si l’on ne trouve pas, une colonne entière est nulle et donc le système n’a pas de solution)
           <h4>Conclusion</h4>
           <p>
-              On voit que cette méthode d'approximation numérique fonctionne bien car les zéros trouvés sont très proches des zéros réels.
+              Cette méthode est beaucoup plus rapide que la méthode de Cramer. En utilisant correctement la mémoïsation , on peut encore réduire le nombre de calculs.<br/>
+              Il faut cependant quand même faire attention au cas spécifique ou le déterminant vaut 0.<br/>
+              Pour encore aller plus loins, on pourrait parraleliser les cacules de somme de deux matrices lignes ()
           </p>
 
         </div>
