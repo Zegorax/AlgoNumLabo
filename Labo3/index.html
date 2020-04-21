@@ -34,13 +34,13 @@
 
           <h4>Utilisation</h4>
           <p>
-              Tout d’abord, il faut activer l'option de sécurité <i>strict_origin_policy</i> dans Firefox pour pouvoir lire les fichiers de type JSON sur le disque. Ci-dessous, le lien pour faire cette modification:</br>
+              Tout d’abord, il faut activer l'option de sécurité <i>strict_origin_policy</i> dans Firefox pour pouvoir lire les fichiers de type JSON sur le disque. Ci-dessous, le lien pour faire cette modification (il faut rechercher <i>strict_origin_policy</i> dans la bar de recherche):</br>
               <a href="">Aller à l'option</a><br/>
-              Les trois boutons permettant de (d’essayer) calculer la réponse au système d’équations linéaires proposé par le laboratoire. Le temps de calcul peut être long, car l’opération est répétée 1000 fois (paramétrable) pour calculer une moyenne sur le temps d’exécution.
+              Les trois boutons permettant de (d’essayer) calculer la réponse au système d’équations linéaires proposé par le laboratoire. Le temps de calcul peut être long, car l’opération est répétée 1000 fois (Nombre de fois paramétrable) pour calculer une moyenne sur le temps d’exécution.
               Pour utiliser le programme sur n’importe quel système linéaire :</br>
               <ul>
                 <li>Ajouter le JSON au dossier data</li>
-                <li>Appeler la fonction javascript « compute » en passant le nom de la matrice en paramètre</li>
+                <li>Appeler la fonction javascript <i>compute(fileName)</i> en passant le nom du fichier JSON en paramètre</li>
               </ul>
           </p>
 
@@ -54,14 +54,15 @@
               Cette méthode est beaucoup plus rapide que la méthode de Cramer. En utilisant correctement la mémoïsation , on peut encore réduire le nombre de calculs.<br/>
               Il faut cependant quand même faire attention au cas spécifique ou le déterminant vaut 0.<br/>
               Pour encore aller plus loin, on pourrait paralléliser les calcules de somme de deux matrices lignes (fait de multiple fois dans le programme) grâce à « <i>Single instruction multiple data</i> » ou <strong>SIMD</strong>.<br/>
-              Cela permet de calculer la somme de tous les éléments de deux tableaux en en prenant plusieurs à la fois … (<a href= « https://fr.wikipedia.org/wiki/Single_instruction_multiple_data »>SIMD</a>)
+              Cela permet de calculer la somme de tous les éléments de deux tableaux en en prenant plusieurs à la fois … (<a href="https://fr.wikipedia.org/wiki/Single_instruction_multiple_data">SIMD</a>)
           </p>
 
           <h4>Références</h4>
           <p>
               <ul>
-                <li><a href=""></a></li>
-                <li><a href=""></a></li>
+                <li><a href="https://fr.wikipedia.org/wiki/Single_instruction_multiple_data">Single instruction multiple data</a></li>
+                <li><a href="https://fr.wikipedia.org/wiki/M%C3%A9mo%C3%AFsation">Mémoïsation</a></li>
+                <li><a href="https://stackoverflow.com/questions/19706046/how-to-read-an-external-local-json-file-in-javascript">Ouvrire un fichier JSON</a></li>
               </ul>
           </p>
         </div>
