@@ -34,7 +34,7 @@
 
           <h4>Utilisation</h4>
           <p>
-              Tout d’abord, il faut activer l'option de sécurité "strict_origin_policy" dans Firefox pour pouvoir lire les fichiers de type JSON sur le disque. Ci-dessous, le lien pour faire cette modification:</br>
+              Tout d’abord, il faut activer l'option de sécurité <i>strict_origin_policy</i> dans Firefox pour pouvoir lire les fichiers de type JSON sur le disque. Ci-dessous, le lien pour faire cette modification:</br>
               <a href="">Aller à l'option</a><br/>
               Les trois boutons permettant de (d’essayer) calculer la réponse au système d’équations linéaires proposé par le laboratoire. Le temps de calcul peut être long, car l’opération est répétée 1000 fois (paramétrable) pour calculer une moyenne sur le temps d’exécution.
               Pour utiliser le programme sur n’importe quel système linéaire :</br>
@@ -48,14 +48,22 @@
           <h4>Fonctionnement</h4>
           <p>
               On commence par calculer la matrice triangulaire, pour ce faire on utilise la méthode du pivot de Gauss. On travaille ligne par ligne en commençant par en haut. Pour chaque ligne, on travail colonne par colonne pour arriver à la ligne finale.<br/>
-              Si on tombe sur un zéro sur la diagonale, on va « swaper » la ligne courante avec la première ligne  de la matrice telle que son élément sur la même colonne ne soit pas nul (si l’on ne trouve pas, une colonne entière est nulle et donc le système n’a pas de solution)
+              Si on tombe sur un zéro sur la diagonale, on va <i>swaper</i> la ligne courante avec la première ligne  de la matrice telle que son élément sur la même colonne ne soit pas nul (si l’on ne trouve pas, une colonne entière est nulle et donc le système n’a pas de solution)
           <h4>Conclusion</h4>
           <p>
               Cette méthode est beaucoup plus rapide que la méthode de Cramer. En utilisant correctement la mémoïsation , on peut encore réduire le nombre de calculs.<br/>
               Il faut cependant quand même faire attention au cas spécifique ou le déterminant vaut 0.<br/>
-              Pour encore aller plus loins, on pourrait parraleliser les cacules de somme de deux matrices lignes ()
+              Pour encore aller plus loin, on pourrait paralléliser les calcules de somme de deux matrices lignes (fait de multiple fois dans le programme) grâce à « <i>Single instruction multiple data</i> » ou <strong>SIMD</strong>.<br/>
+              Cela permet de calculer la somme de tous les éléments de deux tableaux en en prenant plusieurs à la fois … (<a href= « https://fr.wikipedia.org/wiki/Single_instruction_multiple_data »>SIMD</a>)
           </p>
 
+          <h4>Références</h4>
+          <p>
+              <ul>
+                <li><a href=""></a></li>
+                <li><a href=""></a></li>
+              </ul>
+          </p>
         </div>
 
 		<script type="text/javascript" src="js/main.js"></script>
