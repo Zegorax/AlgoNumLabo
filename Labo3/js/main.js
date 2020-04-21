@@ -79,6 +79,7 @@ function compute(fileName)
     });
 }
 
+//Main compute function
 function X(A,B,SIZE)
 {
     let X = Array(SIZE);
