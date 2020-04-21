@@ -20,7 +20,8 @@ function compute(fileName)
 
 
         //Compute the mean of the execution time
-        let sum = 0;
+		let sum = 0;
+		let allTimes = [];
         for(let i = 0; i < iterationNb; i++)
         {
             //Copy the data
@@ -35,7 +36,9 @@ function compute(fileName)
 
             let t1 = performance.now();
 
-            sum += (t1 - t0);
+			let time = t1 - t0;
+			sum += time;
+			allTimes.push(time);
         }
 
         let computeTime = sum / iterationNb;
@@ -66,7 +69,8 @@ function compute(fileName)
 			document.getElementById("result").innerHTML = 'X = <sup>t</sup>[' + str + ']';
 
 			//Show the compute time
-			document.getElementById("time").innerHTML = computeTime + ' ms en faisant la moyenne sur ' + iterationNb + ' iterations.';
+			document.getElementById("time").innerHTML = computeTime + ' ms en faisant la moyenne sur ' + iterationNb + ' iterations. <br>';
+			document.getElementById("time").innerHTML += 'Le temps le plus court était de ' + Math.min.apply(Math, allTimes) + ' ms';
 		}
 		else
 		{
