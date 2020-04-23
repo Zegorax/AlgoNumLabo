@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>AN20_Labo3_Equipe1</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+    </head>
+    <body>
+		<h1>Algorithmes numériques</h1>
+		<h2>Laboratoire #3 : Systèmes linéaires</h2>
+		<h2>Equipe 1 : Verardo Luca, Portmann Alexis, Marty Mathias</h2>
+		<h2>Date de développement : 18.04.2020</h2>
+
+		<h3>Choisir une matrice</h3>
+		<button onclick='compute("Matrice_210x210.json")'>210x210</button>
+		<button onclick='compute("matrice_avecPB_3x3_avec_A_a_0.json")'>3x3 avec A = 0</button>
+		<button onclick='compute("matrice_avecPB_3x3_avec_SwapObligatoire.json")'>3x3 avec swap</button>
+
+		<h3>Resultats</h3>
+		<div id="loader" hidden=""></div>
+		<p id="result">X ≈ <sup>t</sup>[...]</p>
+
+		<h3>Temps de calcul</h3>
+		<p id="time">...</p>
+
+        <div class="rapport">
+
+          <h3>Rapport</h3>
+
+          <h4>Introduction</h4>
+          <p>
+              Le but de ce laboratoire est de développer un programme permettant de résoudre des systèmes d'équations linéaires en JS.<br/>
+              Le défi est d'avoir le temps d'exécution le plus court possible.
+          </p>
+
+          <h4>Utilisation</h4>
+          <p>
+              Tout d'abord, il faut ouvrir un nouvel onglet de Firefox et taper <strong>about:config</strong> puis valider l'avertissement. Dans la barre de recherche, il faut taper <strong>security.fileuri.strict_origin_policy</strong> et double cliquer sur l'option afin de la faire passer de <strong>true</strong> à <strong>false</strong><br><br/>
+              Les trois boutons permettant de (d’essayer) calculer la réponse au système d’équations linéaires proposé par le laboratoire. Le temps de calcul peut être long, car l’opération est répétée 1000 fois (Nombre de fois paramétrable) pour calculer une moyenne sur le temps d’exécution.
+              Pour utiliser le programme sur n’importe quel système linéaire :</br>
+              <ul>
+                <li>Ajouter le JSON au dossier data</li>
+                <li>Appeler la fonction javascript <i>compute(fileName)</i> en passant le nom du fichier JSON en paramètre</li>
+              </ul>
+          </p>
+
+
+          <h4>Fonctionnement</h4>
+          <p>
+              On commence par calculer la matrice triangulaire, pour ce faire on utilise la méthode du pivot de Gauss. On travaille ligne par ligne en commençant par en haut. Pour chaque ligne, on travail colonne par colonne pour arriver à la ligne finale.<br/>
+              Si on tombe sur un zéro sur la diagonale, on va <i>swaper</i> la ligne courante avec la première ligne  de la matrice telle que son élément sur la même colonne ne soit pas nul (si l’on ne trouve pas, une colonne entière est nulle et donc le système n’a pas de solution)
+          <h4>Conclusion</h4>
+          <p>
+              Cette méthode est beaucoup plus rapide que la méthode de Cramer. En utilisant correctement la mémoïsation , on peut encore réduire le nombre de calculs.<br/>
+              Il faut cependant quand même faire attention au cas spécifique ou le déterminant vaut 0.<br/>
+              Pour encore aller plus loin, on pourrait paralléliser les calcules de somme de deux matrices lignes (fait de multiple fois dans le programme) grâce à « <i>Single instruction multiple data</i> » ou <strong>SIMD</strong>.<br/>
+              Cela permet de calculer la somme de tous les éléments de deux tableaux en en prenant plusieurs à la fois … (<a href="https://fr.wikipedia.org/wiki/Single_instruction_multiple_data">SIMD</a>)
+          </p>
+
+          <h4>Références</h4>
+          <p>
+              <ul>
+                <li><a href="https://fr.wikipedia.org/wiki/Single_instruction_multiple_data">Single instruction multiple data</a></li>
+                <li><a href="https://fr.wikipedia.org/wiki/M%C3%A9mo%C3%AFsation">Mémoïsation</a></li>
+                <li><a href="https://stackoverflow.com/questions/19706046/how-to-read-an-external-local-json-file-in-javascript">Ouvrire un fichier JSON</a></li>
+              </ul>
+          </p>
+        </div>
+
+		<script type="text/javascript" src="js/main.js"></script>
+    </body>
+</html>
