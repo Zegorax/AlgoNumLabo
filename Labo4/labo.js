@@ -15,7 +15,7 @@ let dx = 0.001;
 //--------------------
 
 compute(f, n, h, a, I, dx);
-//computeCosinus(n, h, dx);
+computeCosinus(n, h, dx);
 
 //Create cosinus from the mac laurin
 function computeCosinus(n, h, dx)
@@ -26,7 +26,7 @@ function computeCosinus(n, h, dx)
     for(let i = 0; i < n; i++)
     {
         //Add each monomial into a the expression tree array
-        E.push(math.parse(" ( -1 ) ^ i * x ^ ( 2 * " + i + " + 1 ) / ((2 * " + i + ")!)"));
+        E.push(math.parse(" (( -1 ) ^ " + i + ") * x ^ ( 2 * " + i + ") / ((2 * " + i + ")!)"));
     }
 
     //Taylor polinomial
