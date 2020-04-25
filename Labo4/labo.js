@@ -257,7 +257,7 @@ function generateGraphConfig(xTab) {
       },
       responsive: true,
       tooltips: {
-        mode: 'nearest',
+        mode: 'index',
         intersect: false
       },
       hover: {
