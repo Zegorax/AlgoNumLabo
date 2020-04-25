@@ -10,49 +10,14 @@
 <body>
   <div class="app">
       <h1>Algorithmes Numériques</h1>
-      <h2>Laboratoire #2 : Résolution d'équation</h2>
+      <h2>Laboratoire #4 : Dérivation numérique</h2>
       <h3>Equipe 1 : Verardo Luca, Portmann Alexis, Marty Mathias</h3>
-      <h3>Date de développement : 23.03.2020</h3>
+      <h3>Date de développement : 25.04.2020</h3>
 
-    <div style="margin: 0 0 10px 0;">
-      <select class="select select-primary select-block mbl" name="functionSelector" onchange="parseFunction(); updateGraphData();" id="functionSelector">
-        <option value="f1">sin(x) - x / 13</option>
-        <option value="f2">x / (1 - x^2)</option>
-        <option value="f3">13cos(x)-5cos(2x)-2cos(3x)-cos(4x)</option>
-        <option value="f4">(1+0.9cos(8x))(1+0.1cos(24x))(0.9+0.05cos(200x))(1+sin(x))</option>
-        <option value="f5">sin(2 sin(2 sin(2 sin(x))))</option>
-      </select>
+		<canvas id="chart" width="600">
 
-      <p>
-        <label>\(f(x)\) =
-          <input type="text" id="addFunctionBox">
-          <button class="btn btn-danger" onclick="addFunctionToSelector()">Ajouter une fonction au sélécteur</button>
-        </label>
-      </p>
-    </div>
-
-    <div id="show-zeros" style="margin: 0 0 50px 0;">
-        <h4>Zéro(s) de la fonction :</h4>
-        <ul id="zeros-list"></ul>
-    </div>
-
-    <label class="checkbox" for="zoomCheckbox" style="display: inline-block;">
-      <input onclick="updateGraphData()" type="checkbox" value="" id="zoomCheckbox" data-toggle="checkbox" class="custom-checkbox">
-      <span class="icons">
-        <span class="icon-unchecked"></span>
-        <span class="icon-checked"></span>
-      </span>
-      Zoom
-    </label>
-
-    <h1><p id="graphTitle"></p></h1>
-
-    <canvas id="chart" width="600"></div>
 
     </div>
-
-
-  </div>
 
   <div class="rapport">
       <h3>Utilisation</h3>
@@ -83,7 +48,6 @@
       </br>
           <a href="https://cyberlearn.hes-so.ch/pluginfile.php/3189492/mod_resource/content/1/BSc2_AlgorithmesNumeriques_Chap2_v1-7-0.pdf">Chapitre 2 du cours</a>
       </p>
-
   </div>
 
   <script src="js/jquery-3.3.1.js"></script>

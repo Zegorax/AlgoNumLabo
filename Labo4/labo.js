@@ -13,6 +13,13 @@ let a = 0;
 let I = {"a": -3.14, "b": 3.14};
 let dx = 0.001;
 //--------------------
+//-------GRAPH--------
+var mainGraph;
+
+
+window.onload = function exampleFunction() { 
+  	compute(f, n, h, a, I, dx)
+} 
 
 compute(f, n, h, a, I, dx);
 computeCosinus(n, h, dx);
@@ -209,5 +216,92 @@ function horner(c, dx)
 //TODO
 function draw(Y, label, I)
 {
+	if(mainGraph == null)
+	{
+		mainGraph = new Chart("chart", generateGraphConfig(X));
+	}
+
+	let data = {
+        label: label,
+        data: Y,
+        backgroundColor: random_rgba(),
+        borderColor: random_rgba(),
+        pointRadius: 0,
+        fill: false,
+      }
+
+
     console.log(label, Y);
+}
+
+function resetGraph()
+{
+
+}
+
+function generateGraphConfig(xTab) {
+  var config = {
+    type: 'line',
+    data: {
+      labels: xTab
+    },
+    options: {
+      interaction:{
+        intersect: false
+      },
+      responsive: true,
+      tooltips: {
+        mode: 'nearest',
+        intersect: false
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: false
+      },
+      scales: {
+        xAxes: [{
+          display: true,
+          color: 'blue',
+          ticks: {
+            beginAtZero: true,
+          },
+          scaleLabel: {
+            display: true
+          }
+        }],
+        yAxes: [{
+          display: true,
+          color: 'blue',
+          scaleLabel: {
+            display: true,
+            labelString: 'Value'
+          }
+        }]
+      },
+      annotation: {
+        annotations: [{
+          type: 'line',
+          mode: 'horizontal',
+          scaleID: 'y-axis-0',
+          value: 0,
+          borderColor: 'rgb(75, 192, 192)',
+          borderWidth: 2,
+        },
+        {
+          type: 'line',
+          mode: 'vertical',
+          scaleID: 'x-axis-0',
+          value: 0,
+          borderColor: 'rgb(75, 192, 192)',
+          borderWidth: 2
+        }]
+      }
+    }
+  };
+  return config;
+}
+
+function random_rgba() {
+    var o = Math.round, r = Math.random, s = 255;
+    return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
 }
