@@ -17,12 +17,10 @@ let dx = 0.001;
 var mainGraph;
 
 
-window.onload = function exampleFunction() { 
-  	compute(f, n, h, a, I, dx)
-} 
-
-compute(f, n, h, a, I, dx);
-computeCosinus(n, h, dx);
+window.onload = function exampleFunction() {
+  	compute(f, n, h, a, I, dx);
+    computeCosinus(n, h, dx);
+}
 
 //Create cosinus from the mac laurin
 function computeCosinus(n, h, dx)
