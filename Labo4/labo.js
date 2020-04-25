@@ -21,6 +21,53 @@ window.onload = function exampleFunction() {
   	compute(f, n, h, a, I, dx)
 } 
 
+compute(f, n, h, a, I, dx);
+//computeCosinus(n, h, dx);
+
+//Create cosinus from the mac laurin
+function computeCosinus(n, h, dx)
+{
+    //Monomial list
+    let E = [];
+
+    for(let i = 0; i < n; i++)
+    {
+        //Add each monomial into a the expression tree array
+        E.push(math.parse(" ( -1 ) ^ i * x ^ ( 2 * " + i + " + 1 ) / ((2 * " + i + ")!)"));
+    }
+
+    //Taylor polinomial
+    let cos = math.parse("0");
+
+    E.forEach(e => {
+        cos = new math.expression.node.OperatorNode('+', 'add', [cos, e]);
+    });
+
+    //Compute it's 2 first derivates
+    let cosder = derivate(cos);
+    let cosderder = derivate(cosder);
+
+    //Data to draw
+    let Dcos = [];
+    let Dcosder = [];
+    let Dcosderder = [];
+
+    //Computed interval
+    let I = {a: -math.PI, b: math.PI};
+
+    //Compute them
+    for(let x = I.a; x < I.b; x += dx)
+    {
+        Dcos.push(cos.evaluate({x: x}));
+        Dcosder.push(cosder.evaluate({x: x, h: h}));
+        Dcosderder.push(cosderder.evaluate({x: x, h: h}));
+    }
+
+    draw(Dcos, "cosinus from mac laurin", I);
+    draw(Dcos, "first derivative of cosinus", I);
+    draw(Dcos, "second derivative of cosinus", I);
+}
+
 //f is the function, n = taylor pol. degree, h = h, a = where's the taylor pol. is centered,
 // I is the interval where to compute and dx is the step between 2 values
 function compute(f, n, h, a, I, dx)
@@ -102,8 +149,8 @@ function drawFirstAndSecondDerivative(f, h, I, dx)
     }
 
     //Draw them with a label
-    draw(d, "first derivate");
-    draw(dd, "second derivate");
+    draw(d, "first derivate", I);
+    draw(dd, "second derivate", I);
 }
 
 //d is an array of all needed consecutive derivatives, a is where the tylor polynomial is centered
@@ -130,7 +177,7 @@ function drawTaylor(d, a, I, dx)
     }
 
     //Draw the taylor polynomial
-    draw(Y, "Taylor polynomial");
+    draw(Y, "Taylor polynomial of degree " + d.length + " centerd at " + a, I);
 }
 
 // f is the function to draw, I is the interval where to draw the function and dx is the step
@@ -146,7 +193,7 @@ function drawFunction(f, I, dx)
     }
 
     //Draw them
-    draw(Y, "real function");
+    draw(Y, "real function", I);
 }
 
 // c is an array of the taylor polynomial coefs and dx is (x - a)
@@ -167,7 +214,7 @@ function horner(c, dx)
 }
 
 //TODO
-function draw(Y, label)
+function draw(Y, label, I)
 {
 	if(mainGraph == null)
 	{
