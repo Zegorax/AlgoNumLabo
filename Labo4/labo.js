@@ -6,32 +6,31 @@ Date de développement :
 */
 
 //-------TEST---------
-let _f = function(x){ return x; };
-let _n = 3;
-let _h = 0.0001;
-let _a = 0;
-let _I = {"a": -3.14, "b": 3.14};
-let _dx = 0.001;
+let f = math.parse('2 * x');
+let n = 3;
+let h = 0.0001;
+let a = 0;
+let I = {"a": -3.14, "b": 3.14};
+let dx = 0.001;
+//--------------------
 
-let i = 0;
-
-compute(_f, _n, _h, _a, _I, _dx)
+compute(f, n, h, a, I, dx)
 
 //f is the function, n = taylor pol. degree, h = h, a = where's the taylor pol. is centered,
 // I is the interval where to compute and dx is the step between 2 values
 function compute(f, n, h, a, I, dx)
 {
     //Succecive derivatives at a
-    let d = [f];
+    let d = [f.evaluate({x: a})];
 
     //Stock the current derivative
     let tmp = f;
 
     //Compute them
     for(let i = 0; i < n; i++) //The 0 derivate is f, already in the array
-    {        //tmp = derivate(tmp.clone(), h);
-        tmp = derivate(function(x) {return i*x;}, h);
-        d.push(tmp);
+    {
+        tmp = derivate(tmp);
+        d.push(tmp.evaluate({x: a, h: h})); //Push a js compiled function, not a string
     }
 
     //Draw the first 2 derivatives
@@ -45,15 +44,36 @@ function compute(f, n, h, a, I, dx)
 }
 
 //f is function to derivate and h is h
-function derivate(f, h)
+function derivate(f)
 {
-    console.log("f(1) = " + f(1));
+    //Expression tree of f(x + h/2), f(x-h/2), f(x + h), f(x - h)
+    let e1 = math.parse("(x + h/2)");
+    let e2 = math.parse("(x - h/2)");
+    let e3 = math.parse("(x + h)");
+    let e4 = math.parse("(x - h)");
 
-    let F = function(x) {return this.f(x);};
-    F.f = function(x){return 100*i++;}
+    let f1 = subby(f, 'x', e1);
+    let f2 = subby(f, 'x', e2);
+    let f3 = subby(f, 'x', e3);
+    let f4 = subby(f, 'x', e4);
 
-    //return function(x){return (8*(f(x + h/2) - f(x - h/2)) - f(x + h) + f(x - h))/(6*h);};
-    //return new Function()
+    //Return the derivative as an expression tree
+    return subby(subby(subby(subby(math.parse("( 8 * ( a - b ) - c + d ) / ( 6 * h )"), 'a', f1), 'b', f2), 'c', f3), 'd', f4);
+}
+
+//f : function where to subsitute x
+//x : value to change
+//e : expression to subsitute
+function subby(f, x, e)
+{
+    return f.transform(function (node, path, parent) {
+        if (node.isSymbolNode && node.name === x) { //Substitude x by
+            return e;
+        }
+        else {
+            return node
+        }
+    });
 }
 
 //f is the function to derivate and drow, h = h,
@@ -64,20 +84,21 @@ function drawFirstAndSecondDerivative(f, h, I, dx)
     let d = [];
     let dd = [];
 
-    //Derivate !
-    let fder = derivate(f, h);
-    let fderder = derivate(fder, h); //(pas le joueur de tennis hihihi)
+    //Derivate ! (subsitute h with its value (only variable is x now))
+    let nodeH = new math.expression.node.ConstantNode(h); //h as a node
+    let fder = subby(derivate(f), 'h', nodeH);
+    let fderder = subby(derivate(fder), 'h', nodeH); //(pas le joueur de tennis hihihi)
 
     //Computes their values in I
     for(let x = I.a; x < I.b; x += dx)
     {
-        d.push(fder(x));
-        dd.push(fderder(x));
+        d.push(fder.evaluate({x: x}));
+        dd.push(fderder.evaluate({x: x}));
     }
 
     //Draw them with a label
     draw(d, "first derivate");
-    draw(d, "second derivate");
+    draw(dd, "second derivate");
 }
 
 //d is an array of all needed consecutive derivatives, a is where the tylor polynomial is centered
@@ -85,13 +106,13 @@ function drawFirstAndSecondDerivative(f, h, I, dx)
 function drawTaylor(d, a, I, dx)
 {
     //Transform all derivatives value into taylor series coefs
-    let c = [];
+    let c = [d[0]]; //First value
     let fact = 1; //Store the current factorial term here, for optimization
-    for(let k = 1; k <= d.length; k++) //Start at 1 for math purpose...
+    for(let k = 1; k < d.length; k++) //Start at 1 for math purpose...
     {
         //Compute new factorial term
         fact *= k;
-        c.push((d[k-1])(a)/(fact));
+        c.push(d[k]/(fact));
     }
 
     //Values to draw
@@ -116,7 +137,7 @@ function drawFunction(f, I, dx)
     //Compute them
     for(let x = I.a; x < I.b; x += dx)
     {
-        Y.push(f(x));
+        Y.push(f.evaluate({x:x}));
     }
 
     //Draw them
@@ -143,5 +164,5 @@ function horner(c, dx)
 //TODO
 function draw(Y, label)
 {
-    console.log(label, Y);
+    //console.log(label, Y);
 }
