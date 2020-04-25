@@ -50,7 +50,8 @@ function computeCosinus(n, h, dx)
     //Data to draw
     let Dcos = [];
     let Dcosder = [];
-    let Dcosderder = [];
+	let Dcosderder = [];
+	let X = [];
 
     //Computed interval
     let I = {a: -math.PI, b: math.PI};
@@ -58,14 +59,15 @@ function computeCosinus(n, h, dx)
     //Compute them
     for(let x = I.a; x < I.b; x += dx)
     {
+		X.push(x);
         Dcos.push(cos.evaluate({x: x}));
         Dcosder.push(cosder.evaluate({x: x, h: h}));
         Dcosderder.push(cosderder.evaluate({x: x, h: h}));
     }
 
-    draw(Dcos, "cosinus from mac laurin", I);
-    draw(Dcos, "first derivative of cosinus", I);
-    draw(Dcos, "second derivative of cosinus", I);
+    draw(X, Dcos, "cosinus from mac laurin", I);
+    draw(X, Dcos, "first derivative of cosinus", I);
+    draw(X, Dcos, "second derivative of cosinus", I);
 }
 
 //f is the function, n = taylor pol. degree, h = h, a = where's the taylor pol. is centered,
@@ -134,7 +136,8 @@ function drawFirstAndSecondDerivative(f, h, I, dx)
 {
     //First and seconds derivates values
     let d = [];
-    let dd = [];
+	let dd = [];
+	let X = [];
 
     //Derivate ! (subsitute h with its value (only variable is x now))
     let nodeH = new math.expression.node.ConstantNode(h); //h as a node
@@ -144,13 +147,14 @@ function drawFirstAndSecondDerivative(f, h, I, dx)
     //Computes their values in I
     for(let x = I.a; x < I.b; x += dx)
     {
+		X.push(x);
         d.push(fder.evaluate({x: x}));
         dd.push(fderder.evaluate({x: x}));
     }
 
     //Draw them with a label
-    draw(d, "first derivate", I);
-    draw(dd, "second derivate", I);
+    draw(X, d, "first derivate", I);
+    draw(X, dd, "second derivate", I);
 }
 
 //d is an array of all needed consecutive derivatives, a is where the tylor polynomial is centered
@@ -167,33 +171,37 @@ function drawTaylor(d, a, I, dx)
         c.push(d[k]/(fact));
     }
 
-    //Values to draw
+	//Values to draw
+	let X = [];
     let Y = [];
 
     //Foreach x to compute, compute the polynomial at the current pos, using horner method to optimize
     for(let x = I.a; x < I.b; x += dx)
     {
+		X.push(x);
         Y.push(horner(c, x - a));
     }
 
     //Draw the taylor polynomial
-    draw(Y, "Taylor polynomial of degree " + d.length + " centerd at " + a, I);
+    draw(X, Y, "Taylor polynomial of degree " + d.length + " centerd at " + a, I);
 }
 
 // f is the function to draw, I is the interval where to draw the function and dx is the step
 function drawFunction(f, I, dx)
 {
-    //Values to draw
+	//Values to draw
+	let X = [];
     let Y = [];
 
     //Compute them
     for(let x = I.a; x < I.b; x += dx)
     {
+		X.push(x);
         Y.push(f.evaluate({x:x}));
     }
 
     //Draw them
-    draw(Y, "real function", I);
+    draw(X, Y, "real function", I);
 }
 
 // c is an array of the taylor polynomial coefs and dx is (x - a)
@@ -214,11 +222,14 @@ function horner(c, dx)
 }
 
 //TODO
-function draw(Y, label, I)
+function draw(X, Y, label, I)
 {
 	if(mainGraph == null)
 	{
+		console.log("Creating new graph")
 		mainGraph = new Chart("chart", generateGraphConfig(X));
+		mainGraph.options.scales.yAxes[0].ticks.min = I.a;
+  		mainGraph.options.scales.yAxes[0].ticks.max = I.b;
 	}
 
 	let data = {
@@ -228,15 +239,14 @@ function draw(Y, label, I)
         borderColor: random_rgba(),
         pointRadius: 0,
         fill: false,
-      }
+	  }
+
+	mainGraph.data.datasets.push(data);
+
+	mainGraph.update();
 
 
-    console.log(label, Y);
-}
-
-function resetGraph()
-{
-
+    console.log(label, X);
 }
 
 function generateGraphConfig(xTab) {
