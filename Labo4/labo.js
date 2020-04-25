@@ -64,8 +64,8 @@ function computeCosinus(n, h, dx)
     }
 
     draw(X, Dcos, "cosinus from mac laurin", I);
-    draw(X, Dcos, "first derivative of cosinus", I);
-    draw(X, Dcos, "second derivative of cosinus", I);
+    draw(X, Dcosder, "first derivative of cosinus", I);
+    draw(X, Dcosderder, "second derivative of cosinus", I);
 }
 
 //f is the function, n = taylor pol. degree, h = h, a = where's the taylor pol. is centered,
