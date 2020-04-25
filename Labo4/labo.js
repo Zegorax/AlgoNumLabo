@@ -6,11 +6,11 @@ Date de développement :
 */
 
 //-------TEST---------
-let f = math.parse('2 * x');
-let n = 3;
+let f = math.parse('sin(x)');
+let n = 10;
 let h = 0.0001;
 let a = 0;
-let I = {"a": -3.14, "b": 3.14};
+let I = {"a": -6.14, "b": 6.14};
 let dx = 0.001;
 //--------------------
 //-------GRAPH--------
@@ -18,7 +18,7 @@ var mainGraph;
 
 
 window.onload = function exampleFunction() {
-  	compute(f, n, h, a, I, dx);
+  	//compute(f, n, h, a, I, dx);
     computeCosinus(n, h, dx);
 }
 
@@ -64,8 +64,8 @@ function computeCosinus(n, h, dx)
     }
 
     draw(X, Dcos, "cosinus from mac laurin", I);
-    draw(X, Dcos, "first derivative of cosinus", I);
-    draw(X, Dcos, "second derivative of cosinus", I);
+    draw(X, Dcosder, "first derivative of cosinus", I);
+    draw(X, Dcosderder, "second derivative of cosinus", I);
 }
 
 //f is the function, n = taylor pol. degree, h = h, a = where's the taylor pol. is centered,
