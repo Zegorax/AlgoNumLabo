@@ -7,7 +7,7 @@ Date de développement :
 
 //-------TEST---------
 let f = math.parse('2 * x');
-let n = 10;
+let n = 3;
 let h = 0.0001;
 let a = 0;
 let I = {"a": -3.14, "b": 3.14};
@@ -15,7 +15,7 @@ let dx = 0.001;
 //--------------------
 //-------GRAPH--------
 var mainGraph;
-
+//--------------------
 
 window.onload = function exampleFunction() {
   	compute(f, n, h, a, I, dx);
