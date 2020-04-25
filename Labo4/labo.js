@@ -230,11 +230,13 @@ function draw(X, Y, label, I)
   		mainGraph.options.scales.yAxes[0].ticks.max = I.b;
 	}
 
+	let color = random_rgba();
+
 	let data = {
         label: label,
         data: Y,
-        backgroundColor: random_rgba(),
-        borderColor: random_rgba(),
+        backgroundColor: color,
+        borderColor: color,
         pointRadius: 0,
         fill: false,
 	  }
@@ -263,7 +265,7 @@ function generateGraphConfig(xTab) {
         intersect: false
       },
       hover: {
-        mode: 'nearest',
+        mode: 'point',
         intersect: false
       },
       scales: {
