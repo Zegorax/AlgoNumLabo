@@ -11,7 +11,7 @@ let n = 7;
 let h = 0.001;
 let a = 0;
 let I = {"a": -6.14, "b": 6.14};
-let dx = 0.001;
+let dx = 0.01;
 let naive = true;
 //--------------------
 //-------GRAPH--------
@@ -126,6 +126,36 @@ function compute(f, n, h, a, I, dx)
 
     //Draw the function (without taylor approximation)
     drawFunction(f, I, dx)
+}
+
+//Function called via the "Show" button to draw a user-entered function
+function mainCompute()
+{
+	let expr = document.getElementById("inputSpecificFunction").value;
+	let f
+	if(expr != "")
+	{
+		try {
+			f = math.parse(expr)
+		} catch (e) {
+			console.log("Wrong syntax")
+			alert("The entered function has a syntax error")
+		}
+
+		let latex = f.toTex()
+		document.getElementById("labelSpecificFunction").innerHTML = "\\(f(x) = " + latex + "\\)"
+		MathJax.typeset()
+	}
+
+	let n = 4;
+	let h = 0.001;
+	let a = 0;
+	let I = {"a": -6.14, "b": 6.14};
+	let dx = 0.01;
+	let naive = true;
+
+	
+
 }
 
 //https://en.wikipedia.org/wiki/Finite_difference
@@ -336,7 +366,7 @@ function horner(c, dx)
     return tmp;
 }
 
-//TODO
+//Main function updating the graph with correct values
 function draw(X, Y, label, I)
 {
 	if(mainGraph == null)
@@ -360,6 +390,7 @@ function draw(X, Y, label, I)
 	mainGraph.data.datasets.push(data);
 }
 
+// Function generating a config for ChartJS
 function generateGraphConfig(xTab) {
   var config = {
     type: 'line',
@@ -422,6 +453,7 @@ function generateGraphConfig(xTab) {
   return config;
 }
 
+// Function for generating a random RGBA color
 function random_rgba() {
     var o = Math.round, r = Math.random, s = 255;
     return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
