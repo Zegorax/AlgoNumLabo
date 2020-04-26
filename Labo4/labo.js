@@ -20,20 +20,7 @@ var needsRebuild = false;
 //--------------------
 
 window.onload = function () {
-    // let t0 = performance.now()
-  	// compute(f, n, h, a, I, dx);
-    // let t1 = performance.now()
-    // console.log("general time : " + (t1-t0));
-
-    // t0 = performance.now()
-	// computeCosinus(n, h, I, dx);
-    // t1 = performance.now()
-    // console.log("cosinus time : " + (t1-t0));
-
-    // t0 = performance.now()
-	// mainGraph.update();
-    // t1 = performance.now()
-    // console.log("graph time : " + (t1-t0));
+    this.document.getElementById("mainComputeButton").click();
 }
 
 //Create cosinus from the mac laurin
@@ -466,7 +453,7 @@ function generateGraphConfig(xTab) {
           type: 'line',
           mode: 'vertical',
           scaleID: 'x-axis-0',
-          value: 0,
+          value: xTab[closest(xTab, 0)],
           borderColor: 'rgb(75, 192, 192)',
           borderWidth: 2
         }]
@@ -480,4 +467,17 @@ function generateGraphConfig(xTab) {
 function random_rgba() {
     var o = Math.round, r = Math.random, s = 255;
     return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
+}
+
+// https://stackoverflow.com/questions/31877795/find-the-closest-index-to-given-value
+function closest(list, x) {
+    var min,
+        chosen = 0;
+    for (var i in list) {
+        min = Math.abs(list[chosen] - x);
+        if (Math.abs(list[i] - x) < min) {
+            chosen = i;
+        }
+    }
+    return chosen;
 }
