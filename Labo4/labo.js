@@ -16,9 +16,10 @@ let naive = true;
 //--------------------
 //-------GRAPH--------
 var mainGraph;
+var needsRebuild = false;
 //--------------------
 
-window.onload = function exampleFunction() {
+window.onload = function () {
     let t0 = performance.now()
   	compute(f, n, h, a, I, dx);
     let t1 = performance.now()
@@ -132,29 +133,35 @@ function compute(f, n, h, a, I, dx)
 function mainCompute()
 {
 	let expr = document.getElementById("inputSpecificFunction").value;
-	let f
+	let optionF
 	if(expr != "")
 	{
 		try {
-			f = math.parse(expr)
+			optionF = math.parse(expr)
 		} catch (e) {
 			console.log("Wrong syntax")
 			alert("The entered function has a syntax error")
 		}
 
-		let latex = f.toTex()
+		let latex = optionF.toTex()
 		document.getElementById("labelSpecificFunction").innerHTML = "\\(f(x) = " + latex + "\\)"
 		MathJax.typeset()
 	}
+	else{
+		optionF = f;
+	}
 
-	let n = 4;
-	let h = 0.001;
-	let a = 0;
-	let I = {"a": -6.14, "b": 6.14};
-	let dx = 0.01;
-	let naive = true;
+	let optionN = parseFloat(document.getElementById("optionN").value);
+	let optionH = parseFloat(document.getElementById("optionH").value);
+	let optionA = parseFloat(document.getElementById("optionA").value);
+	let optionI = {"a": parseFloat(document.getElementById("optionRangeStart").value), "b": parseFloat(document.getElementById("optionRangeEnd").value)};
+	let optionDX = parseFloat(document.getElementById("optionDX").value);
+	let optionNaive = document.getElementById("checkOldMethod").checked;
 
-	
+	needsRebuild = true;
+
+	compute(optionF, optionN, optionH, optionA, optionI, optionDX);
+	mainGraph.update();
 
 }
 
@@ -369,11 +376,21 @@ function horner(c, dx)
 //Main function updating the graph with correct values
 function draw(X, Y, label, I)
 {
-	if(mainGraph == null)
+	if(needsRebuild == true)
 	{
-		mainGraph = new Chart("chart", generateGraphConfig(X));
+		mainGraph.stop();
+		mainGraph.destroy();
+		mainGraph.destroy;
+		needsRebuild = false;
+		mainGraph = undefined;
+	}
+
+	if(mainGraph == undefined)
+	{
+		var ctx = document.getElementById("chart").getContext("2d");
+		mainGraph = new Chart(ctx, generateGraphConfig(X));
 		mainGraph.options.scales.yAxes[0].ticks.min = I.a;
-  		mainGraph.options.scales.yAxes[0].ticks.max = I.b;
+		mainGraph.options.scales.yAxes[0].ticks.max = I.b;
 	}
 
 	let color = random_rgba();
