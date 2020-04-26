@@ -7,7 +7,7 @@ Date de développement :
 
 //-------TEST---------
 let f = math.parse('sin(x)');
-let n = 4;
+let n = 7;
 let h = 0.001;
 let a = 0;
 let I = {"a": -6.14, "b": 6.14};
@@ -20,7 +20,7 @@ var mainGraph;
 
 window.onload = function exampleFunction() {
     let t0 = performance.now()
-  	compute(f, n, h, a, I, dx);
+  	//compute(f, n, h, a, I, dx);
     let t1 = performance.now()
     console.log("general time : " + (t1-t0));
 
@@ -90,7 +90,7 @@ function computeCosinus(n, h, I, dx)
         Dcosder.push(cosder.evaluate({x: x, h: h}));
         Dcosderder.push(cosderder.evaluate({x: x, h: h}));
     }
-    draw(X, Dcos, "cosinus from mac laurin", I);
+    draw(X, Dcos, "cosinus from mac laurin (degree : " + n + ")", I);
     draw(X, Dcosder, "first derivative of cosinus", I);
     draw(X, Dcosderder, "second derivative of cosinus", I);
 }
