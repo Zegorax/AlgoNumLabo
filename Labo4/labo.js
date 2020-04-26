@@ -6,25 +6,39 @@ Date de développement :
 */
 
 //-------TEST---------
-let f = math.parse("2*x");
-let n = 3   ;
-let h = 0.0001;
+let f = math.parse('2 * x');
+let n = 3;
+let h = 0.001;
 let a = 0;
 let I = {"a": -6.14, "b": 6.14};
 let dx = 0.001;
 //--------------------
 //-------GRAPH--------
 var mainGraph;
+//--------------------
 
 window.onload = function exampleFunction() {
+    let t0 = performance.now()
   	compute(f, n, h, a, I, dx);
-	//computeCosinus(n, h, dx);
+    let t1 = performance.now()
+    console.log("general time : " + (t1-t0));
 
+    t0 = performance.now()
+	computeCosinus(n, h, I, dx);
+    t1 = performance.now()
+    console.log("cosinus time : " + (t1-t0));
+
+    t0 = performance.now()
 	mainGraph.update();
+    t1 = performance.now()
+    console.log("graph time : " + (t1-t0));
 }
 
 //Create cosinus from the mac laurin
-function computeCosinus(n, h, dx)
+//n is the degree of the mac laurin series
+//I is the interval to compute and draw the functions
+//dx is the step between 2 computed points
+function computeCosinus(n, h, I, dx)
 {
     //Monomial list
     let E = [];
@@ -46,14 +60,15 @@ function computeCosinus(n, h, dx)
     let cosder = derivate(cos);
     let cosderder = derivate(cosder);
 
+    //Compile them to gain som ( a lot ) perf
+    cosder = cosder.compile();
+    cosderder = cosderder.compile();
+
     //Data to draw
     let Dcos = [];
     let Dcosder = [];
 	let Dcosderder = [];
 	let X = [];
-
-    //Computed interval
-    let I = {a: -math.PI, b: math.PI};
 
     //Compute them
     for(let x = I.a; x < I.b; x += dx)
@@ -90,10 +105,10 @@ function compute(f, n, h, a, I, dx)
     drawFirstAndSecondDerivative(f, h, I, dx);
 
     //Draw taylor polynoms
-    drawTaylor(d, a, I, dx);
+    //drawTaylor(d, a, I, dx);
 
     //Draw the function (without taylor approximation)
-    drawFunction(f, I, dx)
+    //drawFunction(f, I, dx)
 }
 
 //f is function to derivate and h is h
@@ -142,6 +157,10 @@ function drawFirstAndSecondDerivative(f, h, I, dx)
     let nodeH = new math.expression.node.ConstantNode(h); //h as a node
     let fder = subby(derivate(f), 'h', nodeH);
     let fderder = subby(derivate(fder), 'h', nodeH); //(pas le joueur de tennis hihihi)
+
+    //Compiled derivative function into js to gain perf
+    fder = fder.compile();
+    fderder = fderder.compile();
 
     //Computes their values in I
     for(let x = I.a; x < I.b; x += dx)
@@ -256,7 +275,7 @@ function generateGraphConfig(xTab) {
       },
       responsive: true,
       tooltips: {
-        mode: 'nearest',
+        mode: 'index',
         intersect: false
       },
       hover: {
