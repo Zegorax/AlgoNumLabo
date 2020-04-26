@@ -19,7 +19,7 @@ var mainGraph;
 
 window.onload = function exampleFunction() {
     let t0 = performance.now()
-  	compute(f, n, h, a, I, dx);
+  	//compute(f, n, h, a, I, dx);
     let t1 = performance.now()
     console.log("general time : " + (t1-t0));
 
@@ -57,10 +57,11 @@ function computeCosinus(n, h, I, dx)
     });
 
     //Compute it's 2 first derivates
-    let cosder = derivate(cos);
-    let cosderder = derivate(cosder);
+    let cosder = naiveDerivate(cos, 1);
+    let cosderder = naiveDerivate(cos, 2);
 
     //Compile them to gain som ( a lot ) perf
+    cos = cos.compile();
     cosder = cosder.compile();
     cosderder = cosderder.compile();
 
@@ -70,6 +71,7 @@ function computeCosinus(n, h, I, dx)
 	let Dcosderder = [];
 	let X = [];
 
+    let t0 = performance.now();
     //Compute them
     for(let x = I.a; x < I.b; x += dx)
     {
@@ -78,6 +80,8 @@ function computeCosinus(n, h, I, dx)
         Dcosder.push(cosder.evaluate({x: x, h: h}));
         Dcosderder.push(cosderder.evaluate({x: x, h: h}));
     }
+    let t1 = performance.now();
+    console.log(t1-t0);
 
     draw(X, Dcos, "cosinus from mac laurin", I);
     draw(X, Dcosder, "first derivative of cosinus", I);
@@ -97,7 +101,7 @@ function compute(f, n, h, a, I, dx)
     //Compute them
     for(let i = 0; i < n; i++) //The 0 derivate is f, already in the array
     {
-        tmp = derivate(tmp);
+        tmp = naiveDerivate(tmp, 1); //Use the same method over and over...
         d.push(tmp.evaluate({x: a, h: h})); //Push a js compiled function, not a string
     }
 
@@ -105,14 +109,30 @@ function compute(f, n, h, a, I, dx)
     drawFirstAndSecondDerivative(f, h, I, dx);
 
     //Draw taylor polynoms
-    //drawTaylor(d, a, I, dx);
+    drawTaylor(d, a, I, dx);
 
     //Draw the function (without taylor approximation)
-    //drawFunction(f, I, dx)
+    drawFunction(f, I, dx)
+}
+
+//Naive way to compute a derivative (call multiple time the first derivate method....)
+//F function to derivate
+//n degree of the derivate
+function naiveDerivate(f, n)
+{
+    let tmp = f;
+
+    for(let i = 0; i < n; i++) //The 0 derivate is f, already in the array
+    {
+        tmp = derivateFirstOrder(tmp);
+    }
+
+    //Return the new function
+    return tmp;
 }
 
 //f is function to derivate and h is h
-function derivate(f)
+function derivateFirstOrder(f)
 {
     //Expression tree of f(x + h/2), f(x-h/2), f(x + h), f(x - h)
     let e1 = math.parse("(x + h/2)");
@@ -155,8 +175,8 @@ function drawFirstAndSecondDerivative(f, h, I, dx)
 
     //Derivate ! (subsitute h with its value (only variable is x now))
     let nodeH = new math.expression.node.ConstantNode(h); //h as a node
-    let fder = subby(derivate(f), 'h', nodeH);
-    let fderder = subby(derivate(fder), 'h', nodeH); //(pas le joueur de tennis hihihi)
+    let fder = subby(naiveDerivate(f,1), 'h', nodeH);
+    let fderder = subby(naiveDerivate(f,2), 'h', nodeH); //(pas le joueur de tennis hihihi)
 
     //Compiled derivative function into js to gain perf
     fder = fder.compile();
