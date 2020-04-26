@@ -8,16 +8,28 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-  <div class="app">
-      <h1>Algorithmes Numériques</h1>
-      <h2>Laboratoire #4 : Dérivation numérique</h2>
-      <h3>Equipe 1 : Verardo Luca, Portmann Alexis, Marty Mathias</h3>
-      <h3>Date de développement : 25.04.2020</h3>
+  	<div class="app">
+		<h1>Algorithmes Numériques</h1>
+		<h2>Laboratoire #4 : Dérivation numérique</h2>
+		<h3>Equipe 1 : Verardo Luca, Portmann Alexis, Marty Mathias</h3>
+		<h3>Date de développement : 25.04.2020</h3>
+
+		<br>
+		<p>
+			<label>\(f(x)\) =
+			<input type="text" id="inputSpecificFunction">
+			<button class="btn btn-danger" onclick="computeSpecificFunction()">Afficher</button>
+			</label>
+		</p>
+		
+		<p>
+			<label id="labelSpecificFunction"></label>
+		</p>
 
 		<canvas id="chart" width="600">
 
 
-    </div>
+	</div>
 
   <div class="rapport">
       <h3>Utilisation</h3>
