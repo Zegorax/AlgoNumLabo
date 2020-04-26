@@ -1,74 +1,117 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8"/>
-  <title>AN_Labo2_Equipe1</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="flatui/dist/css/flat-ui.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
-<body>
-  	<div class="app">
-		<h1>Algorithmes Numériques</h1>
-		<h2>Laboratoire #4 : Dérivation numérique</h2>
-		<h3>Equipe 1 : Verardo Luca, Portmann Alexis, Marty Mathias</h3>
-		<h3>Date de développement : 25.04.2020</h3>
+	<head>
+	<meta charset="utf-8"/>
+	<title>AN_Labo2_Equipe1</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	</head>
+	<body>
+		<div class="app">
+			<h1>Algorithmes Numériques</h1>
+			<h2>Laboratoire #4 : Dérivation numérique</h2>
+			<h3>Equipe 1 : Verardo Luca, Portmann Alexis, Marty Mathias</h3>
+			<h3>Date de développement : 25.04.2020</h3>
 
-		<br>
-		<p>
-			<label>\(f(x)\) =
-			<input type="text" id="inputSpecificFunction">
-			<button class="btn btn-danger" onclick="computeSpecificFunction()">Afficher</button>
-			</label>
-		</p>
-		
-		<p>
-			<label id="labelSpecificFunction"></label>
-		</p>
+			<br>
+			<p>
+				<label>\(f(x)\) =
+				<input type="text" id="inputSpecificFunction">
+				</label>
+			</p>
+			
+			<p>
+				<label id="labelSpecificFunction"></label>
+			</p>
 
-		<canvas id="chart" width="600">
+			<div class="form-group form-inline" style="width: 40%;">
+				<label for="optionN">
+					n
+				</label>
+				<input type="range" class="custom-range" id="optionN">
+
+				
+
+				<label for="optionH">
+					h
+				</label>
+				<input type="range" class="custom-range" id="optionH">
+
+				<label for="optionA">
+					a
+				</label>
+				<input type="range" class="custom-range" id="optionA">
+
+				<label for="optionIstart">
+					Range start
+				</label>
+				<input type="range" class="custom-range" id="optionIstart">
+
+				<label for="optionIend">
+					Range end
+				</label>
+				<input type="range" class="custom-range" id="optionIend">
+
+				<label for="optionDX">
+					Dx
+				</label>
+				<input type="range" class="custom-range" id="optionDX">
+				<br>
+				
+				<input class="form-check-input" type="checkbox" value="" id="optionNaive">
+				<label class="form-check-label" for="optionNaive">
+					Naive
+				</label>
 
 
-	</div>
+			</div>
+			
 
-  <div class="rapport">
-      <h3>Utilisation</h3>
-      <p>
-          Choisir la fonction dont on veut trouver les zéros avec la liste déroulante verte. Le tracé de la fonction s'affiche en rouge sur le graphe.</br>
-          Pour calculer les zéros de la fonction, cliquer sur le bouton 'Calculer les zéros'. Les zéros de la fonctions s'affichent en liste à puces au dessus du bouton. Les intervalles utilisés pour calculer la tangente en chaque zéros sont indiqués en rose sur le graphe.
-          Il est possible d'ajouter des fonctions à votre guise, qui seront ensuite affichées avec leur zéros.
-      </p>
-      <h3>Rapport</h3>
+			<button class="btn btn-danger" onclick="mainCompute()">Afficher</button>
+			<canvas id="chart" width="600">
 
-      <h4>Contexte</h4>
-      <p>
-          Le but de ce laboratoire est de développer un programme présentant une des trois méthodes (dichotomie, tangente et point fixe) pour trouver les solutions des fonctions ci-dessous de -100 à 100. Nous avons choisi la méthode de la tangente.
-      </p>
-      <h4>Méthode</h4>
-      <p>
-          Au lieu de demander les x<sub>0</sub> à l'utilisateur, le programme parcourt la fonction sur l'intervalle qui est donné et détecte à quel(s) endroit(s) elle change de signe. Ensuite, ces zéros sont envoyés à la fonction qui fait le calcul de la tangente de Newton. Cette fonction va alors calculer la tangente avec les points juste avant ou ces points-là, ce qui va retourner obligatoirement le zéro qui est le plus proche. Pour calculer la tangente, on a besoin de la valeur de la dérivée aux points de tangence, pour ce faire on approxime cette valeur en divisant un petit saut vertical de la fonction par le petit saut horizontal correspondant.
 
-      </p>
+		</div>
 
-      <h4>Conclusion</h4>
-      <p>
-          Cette méthode d'approximation peut converger très vite, et l’on évite beaucoup de cas problématiques grâce à notre première approche dichotomique des zéros.
-      </p>
-      <h4>Références</h4>
-      <p>
-         <a href="https://mathjs.org/docs/expressions/expression_trees.html">Math js</a>
-     </br>
-         <a href="https://en.wikipedia.org/wiki/Taylor_series">Taylor series (Wikipedia)</a>
-      </p>
-  </div>
+		<div class="rapport">
+			<h3>Utilisation</h3>
+			<p>
+				Choisir la fonction dont on veut trouver les zéros avec la liste déroulante verte. Le tracé de la fonction s'affiche en rouge sur le graphe.</br>
+				Pour calculer les zéros de la fonction, cliquer sur le bouton 'Calculer les zéros'. Les zéros de la fonctions s'affichent en liste à puces au dessus du bouton. Les intervalles utilisés pour calculer la tangente en chaque zéros sont indiqués en rose sur le graphe.
+				Il est possible d'ajouter des fonctions à votre guise, qui seront ensuite affichées avec leur zéros.
+			</p>
+			<h3>Rapport</h3>
 
-  <script src="flatui/app/scripts/flat-ui.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <script src="chart.js"></script>
-  <script src="annotation-plugin.js"></script>
-  <script id="MathJax-script" src="js/tex-svg.js"></script>
-  <script type="text/javascript" src="js/math.js"></script>
-  <script src="labo.js"></script>
-</body>
+			<h4>Contexte</h4>
+			<p>
+				Le but de ce laboratoire est de développer un programme présentant une des trois méthodes (dichotomie, tangente et point fixe) pour trouver les solutions des fonctions ci-dessous de -100 à 100. Nous avons choisi la méthode de la tangente.
+			</p>
+			<h4>Méthode</h4>
+			<p>
+				Au lieu de demander les x<sub>0</sub> à l'utilisateur, le programme parcourt la fonction sur l'intervalle qui est donné et détecte à quel(s) endroit(s) elle change de signe. Ensuite, ces zéros sont envoyés à la fonction qui fait le calcul de la tangente de Newton. Cette fonction va alors calculer la tangente avec les points juste avant ou ces points-là, ce qui va retourner obligatoirement le zéro qui est le plus proche. Pour calculer la tangente, on a besoin de la valeur de la dérivée aux points de tangence, pour ce faire on approxime cette valeur en divisant un petit saut vertical de la fonction par le petit saut horizontal correspondant.
+
+			</p>
+
+			<h4>Conclusion</h4>
+			<p>
+				Cette méthode d'approximation peut converger très vite, et l’on évite beaucoup de cas problématiques grâce à notre première approche dichotomique des zéros.
+			</p>
+			<h4>Références</h4>
+			<p>
+				<a href="https://mathjs.org/docs/expressions/expression_trees.html">Math js</a>
+			</br>
+				<a href="https://en.wikipedia.org/wiki/Taylor_series">Taylor series (Wikipedia)</a>
+			</p>
+		</div>
+
+		<script src="js/jquery-3.3.1.js"></script>
+		<script src="js/bootstrap-slider.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+		<script src="chart.js"></script>
+		<script src="annotation-plugin.js"></script>
+		<script id="MathJax-script" src="js/tex-svg.js"></script>
+		<script src="js/math.js"></script>
+		<script src="labo.js"></script>
+	</body>
 </html>

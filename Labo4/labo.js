@@ -129,23 +129,33 @@ function compute(f, n, h, a, I, dx)
 }
 
 //Function called via the "Show" button to draw a user-entered function
-function computeSpecificFunction()
+function mainCompute()
 {
 	let expr = document.getElementById("inputSpecificFunction").value;
 	let f
+	if(expr != "")
+	{
+		try {
+			f = math.parse(expr)
+		} catch (e) {
+			console.log("Wrong syntax")
+			alert("The entered function has a syntax error")
+		}
 
-	try {
-		f = math.parse(expr)
-	} catch (e) {
-		console.log("Wrong syntax")
-		alert("The entered function has a syntax error")
+		let latex = f.toTex()
+		document.getElementById("labelSpecificFunction").innerHTML = "\\(f(x) = " + latex + "\\)"
+		MathJax.typeset()
 	}
 
-	let latex = f.toTex()
+	let n = 4;
+	let h = 0.001;
+	let a = 0;
+	let I = {"a": -6.14, "b": 6.14};
+	let dx = 0.01;
+	let naive = true;
 
-	document.getElementById("labelSpecificFunction").innerHTML = "\\(f(x) = " + latex + "\\)"
+	
 
-	MathJax.typeset()
 }
 
 //https://en.wikipedia.org/wiki/Finite_difference
