@@ -71,7 +71,6 @@ function computeCosinus(n, h, I, dx)
 	let Dcosderder = [];
 	let X = [];
 
-    let t0 = performance.now();
     //Compute them
     for(let x = I.a; x < I.b; x += dx)
     {
@@ -80,9 +79,6 @@ function computeCosinus(n, h, I, dx)
         Dcosder.push(cosder.evaluate({x: x, h: h}));
         Dcosderder.push(cosderder.evaluate({x: x, h: h}));
     }
-    let t1 = performance.now();
-    console.log(t1-t0);
-
     draw(X, Dcos, "cosinus from mac laurin", I);
     draw(X, Dcosder, "first derivative of cosinus", I);
     draw(X, Dcosderder, "second derivative of cosinus", I);
