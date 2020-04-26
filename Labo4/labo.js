@@ -6,12 +6,13 @@ Date de développement :
 */
 
 //-------TEST---------
-let f = math.parse('2 * x');
-let n = 3;
+let f = math.parse('sin(x)');
+let n = 4;
 let h = 0.001;
 let a = 0;
 let I = {"a": -6.14, "b": 6.14};
 let dx = 0.01;
+let naive = true;
 //--------------------
 //-------GRAPH--------
 var mainGraph;
@@ -19,7 +20,7 @@ var mainGraph;
 
 window.onload = function exampleFunction() {
     let t0 = performance.now()
-  	//compute(f, n, h, a, I, dx);
+  	compute(f, n, h, a, I, dx);
     let t1 = performance.now()
     console.log("general time : " + (t1-t0));
 
@@ -57,8 +58,18 @@ function computeCosinus(n, h, I, dx)
     });
 
     //Compute it's 2 first derivates
-    let cosder = naiveDerivate(cos, 1);
-    let cosderder = naiveDerivate(cos, 2);
+    let cosder = null;
+    let cosderder = null;
+    if(naive)
+    {
+        cosder = naiveDerivate(cos, 1);
+        cosderder = naiveDerivate(cosder, 1);
+    }
+    else {
+        cosder = derivateFromNOrderFiniteCentralDifference(cos, 1);
+        coserder = derivateFromNOrderFiniteCentralDifference(cos, 2);
+    }
+
 
     //Compile them to gain som ( a lot ) perf
     cos = cos.compile();
@@ -97,14 +108,20 @@ function compute(f, n, h, a, I, dx)
     //Compute them
     for(let i = 0; i < n; i++) //The 0 derivate is f, already in the array
     {
-        tmp = naiveDerivate(tmp, 1); //Use the same method over and over...
+        if(naive)
+        {
+            tmp = naiveDerivate(tmp, 1); //Use the same method over and over...
+        }
+        else {
+            tmp = derivateFromNOrderFiniteCentralDifference(f, i + 1);
+        }
         d.push(tmp.evaluate({x: a, h: h})); //Push a js compiled function, not a string
     }
 
     //Draw the first 2 derivatives
     drawFirstAndSecondDerivative(f, h, I, dx);
 
-    //Draw taylor polynoms
+    //Draw taylor polynom
     drawTaylor(d, a, I, dx);
 
     //Draw the function (without taylor approximation)
@@ -131,8 +148,63 @@ function computeSpecificFunction()
 	MathJax.typeset()
 }
 
+//https://en.wikipedia.org/wiki/Finite_difference
+//Generalized the methods seen in classes (we chose the central version, because it's O(n^2))
+//f function to derivate
+//n degree of the derivate
+function derivateFromNOrderFiniteCentralDifference(f, n)
+{
+    //If degree = 0, return the function
+    if(n == 0)
+    {
+        return f;
+    }
+    else
+    {
+        //Compute delta
+        let delta = math.parse("0");
+
+        //Binomial coef to use
+        let binomialCoefA = math.factorial(n); //Numerator
+        let binomialCoefB = 0; //Denumerator
+        let binomialCoef = 0; //A is a contant part ( = n ! )
+
+        //Compute each element of the sum as an expression tree
+        let F = [];
+        for(let i = 0; i <= n; i++)
+        {
+            //Compute next binomial coef
+            binomialCoefB = math.factorial(i)* math.factorial(n - i); // new B
+            binomialCoef = binomialCoefA / binomialCoefB; // new coef
+
+            //Sign to use
+            let sign = ( i % 2 == 0 ? 1 : -1);
+
+            //Evaluate the function at the expression below
+            let e = math.parse("x + (" + n + " / 2 - " + i + ") * h");
+
+            //subsitute function expression
+            let Fe = subby(f, 'x', e);
+
+            //Create the node
+            F.push(subby(math.parse(sign + " * " + binomialCoef + " * f"), 'f', Fe));
+        }
+
+        //delta is te sum of of the element of F
+        F.forEach(e => {
+            delta = new math.expression.node.OperatorNode('+', 'add', [delta, e]);
+        });
+
+        //Divide delta by h to the power of n
+        let tmp = new math.expression.node.OperatorNode('/', 'divide', [delta, math.parse("h^" + n)]);
+
+        //Return the derivative
+        return tmp;
+    }
+}
+
 //Naive way to compute a derivative (call multiple time the first derivate method....)
-//F function to derivate
+//f function to derivate
 //n degree of the derivate
 function naiveDerivate(f, n)
 {
@@ -191,8 +263,17 @@ function drawFirstAndSecondDerivative(f, h, I, dx)
 
     //Derivate ! (subsitute h with its value (only variable is x now))
     let nodeH = new math.expression.node.ConstantNode(h); //h as a node
-    let fder = subby(naiveDerivate(f,1), 'h', nodeH);
-    let fderder = subby(naiveDerivate(f,2), 'h', nodeH); //(pas le joueur de tennis hihihi)
+    let fder = null;
+    let fderder = null; //(pas le joueur de tennis hihihi)
+    if(naive)
+    {
+        fder = subby(naiveDerivate(f,1), 'h', nodeH);
+        fderder = subby(naiveDerivate(f,2), 'h', nodeH);
+    }
+    else {
+        fder = subby(derivateFromNOrderFiniteCentralDifference(f, 1), 'h', nodeH);
+        fderder = subby(derivateFromNOrderFiniteCentralDifference(f, 2), 'h', nodeH);
+    }
 
     //Compiled derivative function into js to gain perf
     fder = fder.compile();
