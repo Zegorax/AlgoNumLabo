@@ -6,13 +6,13 @@ Date de développement :
 */
 
 //-------TEST---------
-let f = math.parse('sin(x)');
-let n = 7;
-let h = 0.001;
-let a = 0;
-let I = {"a": -6.14, "b": 6.14};
-let dx = 0.01;
-let naive = true;
+//let f = math.parse('sin(x)');
+//let n = 7;
+//let h = 0.001;
+//let a = 0;
+//let I = {"a": -6.14, "b": 6.14};
+//let dx = 0.01;
+//let naive = true;
 //--------------------
 //-------GRAPH--------
 var mainGraph;
@@ -20,27 +20,15 @@ var needsRebuild = false;
 //--------------------
 
 window.onload = function () {
-    // let t0 = performance.now()
-  	// compute(f, n, h, a, I, dx);
-    // let t1 = performance.now()
-    // console.log("general time : " + (t1-t0));
-
-    // t0 = performance.now()
-	// computeCosinus(n, h, I, dx);
-    // t1 = performance.now()
-    // console.log("cosinus time : " + (t1-t0));
-
-    // t0 = performance.now()
-	// mainGraph.update();
-    // t1 = performance.now()
-    // console.log("graph time : " + (t1-t0));
+    this.document.getElementById("mainComputeButton").click();
 }
 
 //Create cosinus from the mac laurin
 //n is the degree of the mac laurin series
 //I is the interval to compute and draw the functions
 //dx is the step between 2 computed points
-function computeCosinus(n, h, I, dx)
+// finitediff : if true, dont use the version from the polynomial of degree 4
+function computeCosinus(n, h, I, dx, finitediff)
 {
     //Monomial list
     let E = [];
@@ -61,7 +49,7 @@ function computeCosinus(n, h, I, dx)
     //Compute it's 2 first derivates
     let cosder = null;
     let cosderder = null;
-    if(naive)
+    if(finitediff)
     {
         cosder = naiveDerivate(cos, 1);
         cosderder = naiveDerivate(cosder, 1);
@@ -98,7 +86,9 @@ function computeCosinus(n, h, I, dx)
 
 //f is the function, n = taylor pol. degree, h = h, a = where's the taylor pol. is centered,
 // I is the interval where to compute and dx is the step between 2 values
-function compute(f, n, h, a, I, dx)
+// D isArray of degree of derivatives to draw
+// finitediff : if true, dont use the version from the polynomial of degree 4
+function compute(f, n, h, a, I, dx, D, finitediff)
 {
     //Succecive derivatives at a
     let d = [f.evaluate({x: a})];
@@ -109,7 +99,7 @@ function compute(f, n, h, a, I, dx)
     //Compute them
     for(let i = 0; i < n; i++) //The 0 derivate is f, already in the array
     {
-        if(naive)
+        if(finitediff)
         {
             tmp = naiveDerivate(tmp, 1); //Use the same method over and over...
         }
@@ -120,7 +110,7 @@ function compute(f, n, h, a, I, dx)
     }
 
     //Draw the first 2 derivatives
-    drawFirstAndSecondDerivative(f, h, I, dx);
+    drawDerivatives(f, h ,I, dx, D, finitediff);
 
     //Draw taylor polynom
     drawTaylor(d, a, I, dx);
@@ -157,10 +147,15 @@ function mainCompute()
 	let optionI = {"a": parseFloat(document.getElementById("optionRangeStart").value), "b": parseFloat(document.getElementById("optionRangeEnd").value)};
 	let optionDX = parseFloat(document.getElementById("optionDX").value);
 	let optionNaive = document.getElementById("checkOldMethod").checked;
+    let tmp = document.getElementById("optionDerivatives").value.split(",");
+    let optionDerivative = [];
+    tmp.forEach( i => {
+        optionDerivative.push(parseInt(i)); //Transform to int
+    });
 
 	needsRebuild = true;
 
-	compute(optionF, optionN, optionH, optionA, optionI, optionDX);
+	compute(optionF, optionN, optionH, optionA, optionI, optionDX, optionDerivative, optionNaive);
 	mainGraph.update();
 }
 
@@ -275,6 +270,48 @@ function subby(f, x, e)
     });
 }
 
+
+//f is the function to derivate and drow, h = h,
+// I is the interval where to compute and dx is the step between 2 values
+// D isArray of degree of derivatives to draw
+// finitediff : if true, dont use the version from the polynomial of degree 4
+function drawDerivatives(f, h, I, dx, D, finitediff)
+{
+    //Array containing label and function itself
+    let F = [];
+
+    //h as a node
+    let nodeH = new math.expression.node.ConstantNode(h);
+
+    D.forEach( d => {
+        let data = {l : d + " nt derivative", f : null, Y : []};
+        if(finitediff)
+        {
+            data.f = subby(naiveDerivate(f,d), 'h', nodeH);
+        }
+        else {
+            data.f = subby(derivateFromNOrderFiniteCentralDifference(f,d), 'h', nodeH);
+        }
+
+        F.push(data);
+    });
+
+    //Computes their values in I
+    let X = [];
+    for(let x = I.a; x < I.b; x += dx)
+    {
+        X.push(x);
+
+        for(let i = 0; i < F.length; i++)
+            F[i].Y.push(F[i].f.evaluate({x:x}));
+    }
+
+    //Draw them with the right label
+    F.forEach( data => {
+        draw(X, data.Y, data.l, I);
+    });
+}
+/*
 //f is the function to derivate and drow, h = h,
 // I is the interval where to compute and dx is the step between 2 values
 function drawFirstAndSecondDerivative(f, h, I, dx)
@@ -314,7 +351,7 @@ function drawFirstAndSecondDerivative(f, h, I, dx)
     draw(X, d, "first derivate", I);
     draw(X, dd, "second derivate", I);
 }
-
+*/
 //d is an array of all needed consecutive derivatives, a is where the tylor polynomial is centered
 // and I is the interval where to compute and dx is the step between 2 values
 function drawTaylor(d, a, I, dx)
@@ -466,7 +503,7 @@ function generateGraphConfig(xTab) {
           type: 'line',
           mode: 'vertical',
           scaleID: 'x-axis-0',
-          value: 0,
+          value: xTab[closest(xTab, 0)],
           borderColor: 'rgb(75, 192, 192)',
           borderWidth: 2
         }]
@@ -480,4 +517,17 @@ function generateGraphConfig(xTab) {
 function random_rgba() {
     var o = Math.round, r = Math.random, s = 255;
     return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
+}
+
+// https://stackoverflow.com/questions/31877795/find-the-closest-index-to-given-value
+function closest(list, x) {
+    var min,
+        chosen = 0;
+    for (var i in list) {
+        min = Math.abs(list[chosen] - x);
+        if (Math.abs(list[i] - x) < min) {
+            chosen = i;
+        }
+    }
+    return chosen;
 }
