@@ -20,20 +20,20 @@ var needsRebuild = false;
 //--------------------
 
 window.onload = function () {
-    let t0 = performance.now()
-  	//compute(f, n, h, a, I, dx);
-    let t1 = performance.now()
-    console.log("general time : " + (t1-t0));
+    // let t0 = performance.now()
+  	// compute(f, n, h, a, I, dx);
+    // let t1 = performance.now()
+    // console.log("general time : " + (t1-t0));
 
-    t0 = performance.now()
-	computeCosinus(n, h, I, dx);
-    t1 = performance.now()
-    console.log("cosinus time : " + (t1-t0));
+    // t0 = performance.now()
+	// computeCosinus(n, h, I, dx);
+    // t1 = performance.now()
+    // console.log("cosinus time : " + (t1-t0));
 
-    t0 = performance.now()
-	mainGraph.update();
-    t1 = performance.now()
-    console.log("graph time : " + (t1-t0));
+    // t0 = performance.now()
+	// mainGraph.update();
+    // t1 = performance.now()
+    // console.log("graph time : " + (t1-t0));
 }
 
 //Create cosinus from the mac laurin
@@ -162,7 +162,13 @@ function mainCompute()
 
 	compute(optionF, optionN, optionH, optionA, optionI, optionDX);
 	mainGraph.update();
+}
 
+function mainComputeCosinus()
+{
+	needsRebuild = true;
+	computeCosinus(n, h, I, dx);
+	mainGraph.update();
 }
 
 //https://en.wikipedia.org/wiki/Finite_difference
@@ -376,7 +382,7 @@ function horner(c, dx)
 //Main function updating the graph with correct values
 function draw(X, Y, label, I)
 {
-	if(needsRebuild == true)
+	if(needsRebuild == true && mainGraph != undefined)
 	{
 		mainGraph.stop();
 		mainGraph.destroy();

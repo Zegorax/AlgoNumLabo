@@ -24,40 +24,40 @@
 				<label id="labelSpecificFunction"></label>
 			</p>
 
-			<div class="form-group col-5">
+			<div class="form-group col-10">
 				<div class="form-group row">
-					<label for="example-number-input" class="col-3 col-form-label">n</label>
+					<label for="example-number-input" class="col-5 col-form-label">Taylor polynomial degree : </label>
 					<div class="col-3">
 						<input id="optionN" class="form-control" type="number" value="4" id="example-number-input">
 					</div>
 				</div>
 
 				<div class="form-group row">
-					<label for="example-number-input" class="col-3 col-form-label">h</label>
+					<label for="example-number-input" class="col-5 col-form-label">h </label>
 					<div class="col-3">
 						<input id="optionH" class="form-control" type="number" value="0.001" step="0.001" id="example-number-input">
 					</div>
 				</div>
 				<div class="form-group row">
-					<label for="example-number-input" class="col-3 col-form-label">a</label>
+					<label for="example-number-input" class="col-5 col-form-label">Center of polynomial developpement </label>
 					<div class="col-3">
 						<input id="optionA" class="form-control" type="number" value="0" id="example-number-input">
 					</div>
 				</div>
 				<div class="form-group row">
-					<label for="example-number-input" class="col-3 col-form-label">Range start</label>
+					<label for="example-number-input" class="col-5 col-form-label">Range start</label>
 					<div class="col-3">
 						<input id="optionRangeStart" class="form-control" type="number" value="-3.14" step="0.01" id="example-number-input">
 					</div>
 				</div>
 				<div class="form-group row">
-					<label for="example-number-input" class="col-3 col-form-label">Range end</label>
+					<label for="example-number-input" class="col-5 col-form-label">Range end</label>
 					<div class="col-3">
 						<input id="optionRangeEnd" class="form-control" type="number" value="3.14" step="0.01" id="example-number-input">
 					</div>
 				</div>
 				<div class="form-group row">
-					<label for="example-number-input" class="col-3 col-form-label">dx</label>
+					<label for="example-number-input" class="col-5 col-form-label">step beteween two computed points</label>
 					<div class="col-3">
 						<input id="optionDX" class="form-control" type="number" value="0.01" step="0.01" id="example-number-input">
 					</div>
@@ -65,15 +65,18 @@
 
 				<div class="form-check mb-2 mr-sm-2 mb-sm-0">
 					<label class="form-check-label">
-						<input class="form-check-input" id="checkOldMethod" type="checkbox" checked> Old method
+						<input class="form-check-input" id="checkOldMethod" type="checkbox" checked> Derivate using the polynomial of degree 4 method
 					</label>
 				</div>
 			</div>
 
 
 			<button class="btn btn-danger" onclick="mainCompute()">Afficher</button>
+
+			<br>
+			<br>
 			<h2>Cosinus avec Maclaurin développé</h2>
-			<button class="btn btn" onclick="mainCompute()">Afficher</button>
+			<button class="btn btn-primary" onclick="mainCompute()">Afficher</button>
 			<canvas id="chart" width="600">
 
 		</div>
