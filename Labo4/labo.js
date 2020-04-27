@@ -311,47 +311,7 @@ function drawDerivatives(f, h, I, dx, D, finitediff)
         draw(X, data.Y, data.l, I);
     });
 }
-/*
-//f is the function to derivate and drow, h = h,
-// I is the interval where to compute and dx is the step between 2 values
-function drawFirstAndSecondDerivative(f, h, I, dx)
-{
-    //First and seconds derivates values
-    let d = [];
-	let dd = [];
-	let X = [];
 
-    //Derivate ! (subsitute h with its value (only variable is x now))
-    let nodeH = new math.expression.node.ConstantNode(h); //h as a node
-    let fder = null;
-    let fderder = null; //(pas le joueur de tennis hihihi)
-    if(naive)
-    {
-        fder = subby(naiveDerivate(f,1), 'h', nodeH);
-        fderder = subby(naiveDerivate(f,2), 'h', nodeH);
-    }
-    else {
-        fder = subby(derivateFromNOrderFiniteCentralDifference(f, 1), 'h', nodeH);
-        fderder = subby(derivateFromNOrderFiniteCentralDifference(f, 2), 'h', nodeH);
-    }
-
-    //Compiled derivative function into js to gain perf
-    fder = fder.compile();
-    fderder = fderder.compile();
-
-    //Computes their values in I
-    for(let x = I.a; x < I.b; x += dx)
-    {
-		X.push(x);
-        d.push(fder.evaluate({x: x}));
-        dd.push(fderder.evaluate({x: x}));
-    }
-
-    //Draw them with a label
-    draw(X, d, "first derivate", I);
-    draw(X, dd, "second derivate", I);
-}
-*/
 //d is an array of all needed consecutive derivatives, a is where the tylor polynomial is centered
 // and I is the interval where to compute and dx is the step between 2 values
 function drawTaylor(d, a, I, dx)

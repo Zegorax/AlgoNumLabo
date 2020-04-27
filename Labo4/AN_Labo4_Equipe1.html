@@ -39,7 +39,7 @@
 					</div>
 				</div>
 				<div class="form-group row">
-					<label for="example-number-input" class="col-5 col-form-label">Center of polynomial developpement</label>
+					<label for="example-number-input" class="col-5 col-form-label">Center of polynomial developement</label>
 					<div class="col-3">
 						<input id="optionA" class="form-control" type="number" value="0" id="example-number-input">
 					</div>
@@ -57,7 +57,7 @@
 					</div>
 				</div>
 				<div class="form-group row">
-					<label for="example-number-input" class="col-5 col-form-label">step beteween two computed points</label>
+					<label for="example-number-input" class="col-5 col-form-label">Step beteween two computed points	</label>
 					<div class="col-3">
 						<input id="optionDX" class="form-control" type="number" value="0.01" step="0.01" id="example-number-input">
 					</div>
@@ -71,7 +71,7 @@
 
 				<div class="form-check mb-2 mr-sm-2 mb-sm-0">
 					<label class="form-check-label">
-						<input class="form-check-input" id="checkOldMethod" type="checkbox" checked> Derivate using the polynomial of degree 4 method
+						<input class="form-check-input" id="checkOldMethod" type="checkbox" checked>Derivate using the polynomial of degree 4 method
 					</label>
 				</div>
 			</div>
@@ -90,22 +90,101 @@
 		<div class="rapport">
 			<h3>Utilisation</h3>
 			<p>
-				Choisir la fonction dont on veut trouver les zéros avec la liste déroulante verte. Le tracé de la fonction s'affiche en rouge sur le graphe.</br>
-				Pour calculer les zéros de la fonction, cliquer sur le bouton 'Calculer les zéros'. Les zéros de la fonctions s'affichent en liste à puces au dessus du bouton. Les intervalles utilisés pour calculer la tangente en chaque zéros sont indiqués en rose sur le graphe.
-				Il est possible d'ajouter des fonctions à votre guise, qui seront ensuite affichées avec leur zéros.
+				Deux versions sont possibles :
+				<ul>
+				<li>
+					Affichage du graphe du cosinus et de ses deux premières dérivé sans utiliser de fonction trigonométrique.
+				</li>
+				<li>
+					Affichage d’une fonction, du polynôme de Taylor et de dérivées. Explication des différentes options :
+					<ul>
+					<li>
+						<strong>f(x)</strong>, fonction à utiliser
+					</li>
+					<li>
+						<strong>Taylor polynomial degree</strong>, degré du polynôme de Taylor
+					</li>
+					<li>
+						<strong>h</strong>, facteur de précision h
+					</li>
+					<li>
+						<strong>Center of polynomial development</strong>, correspond au <i>a</i> dans la formule du polynôme de Taylor
+					</li>
+					<li>
+						<strong>Range start / Range end</strong>, intervalle sur lequel calculer la fonction, ses dérivées et son polynôme de Taylor
+					</li>
+					<li>
+						<strong>Step between two computed points</strong>, intervalle de discrétisation de l’affichage des fonctions
+					</li>
+					<li>
+						<strong>Derivative to compute</strong>, liste des degrés des dérivées à calculer
+					</li>
+					</ul>
+				</li>
+				</ul>
+			</p>
+			<p>
+				Deux comportements possibles pour le calcul d’une dérivée, changeable grâce au bouton <i>Derivate using the polynomial of degree 4 method</i>.
+				Si la case est cochée, les dérivés se calculeront en appliquant plusieurs fois la méthode venant du développement en polynôme de Taylor de degré 4.
+				Si la case n’est pas cochée, les dérivés se calculeront à l’aide de la méthode des différences finies, cette méthode généralise la méthode du point du milieu.
+			</p>
+			<p style="color:red;">
+				Attention, le calcul de dérivée de degré 5 ou plus sans utiliser la méthode des différences finies est très long. Il n’est pas recommandé d’utiliser cette méthode pour ce genre de degré
 			</p>
 			<h3>Rapport</h3>
 
 			<h4>Contexte</h4>
 			<p>
-				Le but de ce laboratoire est de développer un programme présentant une des trois méthodes (dichotomie, tangente et point fixe) pour trouver les solutions des fonctions ci-dessous de -100 à 100. Nous avons choisi la méthode de la tangente.
+				<p>
+					Le but du laboratoire est d’afficher la fonction <i>cos(x)</i> et ses deux premières dérivés, sans utiliser une seule fonction trigonométrique.
+				<br/>
+					Pour rendre le laboratoire plus intéressant, nous avant ajouté la possibilité de calculer n’importe quelle dérivée, et le polynôme de Taylor de n’importe quelle fonction en utilisant deux méthodes distinctes pour le calcule de dérivé.
+				</p>
+
 			</p>
 			<h4>Méthode</h4>
 			<p>
-				Au lieu de demander les x<sub>0</sub> à l'utilisateur, le programme parcourt la fonction sur l'intervalle qui est donné et détecte à quel(s) endroit(s) elle change de signe. Ensuite, ces zéros sont envoyés à la fonction qui fait le calcul de la tangente de Newton. Cette fonction va alors calculer la tangente avec les points juste avant ou ces points-là, ce qui va retourner obligatoirement le zéro qui est le plus proche. Pour calculer la tangente, on a besoin de la valeur de la dérivée aux points de tangence, pour ce faire on approxime cette valeur en divisant un petit saut vertical de la fonction par le petit saut horizontal correspondant.
-
+				<h5>Math en général</h5>
+				<p>
+					Pour gérer les fonctions et leurs évaluations (à part l’évaluation du polynôme de Taylor), nous utilisons une libraire, <i>mathjs</i>, qui permet de gérer des expressions mathématiques en transformant une chaine de caractère représentant notre fonction en arbre d’opérateurs et d’opérandes.
+				</p>
+				<h5>Affichage du cosinus et de ses dérivés</h5>
+				<p>
+					Pour afficher le cosinus, nous avons développé le polynôme de Maclaurin connue du cosinus, pour afficher ses deux premières dérivées, nous avons choisi de dériver le polynôme de Maclaurin.
+					<br/>
+					Nous aurions aussi pu afficher le polynôme de Maclaurin du cosinus (dérivé) et l’opposé du polynôme de la fonction cosinus déjà calculée (dérivé seconde) car :
+					<p>\({cos(x)}' = -sin(x)\)</p>
+					<p>\({cos(x)}'' = -cos(x)\)</p>
+					<br/>
+					Nous avons préféré calculer les dérivées en utilisant les méthodes d’approximation vues en cours.
+				</p>
+				<h5>Calcule du polynôme de Taylor</h5>
+				<p>
+					L’évaluation du polynôme de Taylor est optimisée en utilisant la méthode de <i>Ruffni-Horner</i>, elle permet de réduire le nombre de multiplications à effectuer. La voici :</p>
+ 					<p>\({\displaystyle P(x_{0})=((\dots ((a_{n}x_{0}+a_{n-1})x_{0}+a_{n-2})x_{0}+\dots )x_{0}+a_{1})x_{0}+a_{0}}\)</p>
+				</p>
+				<h5>Calcul des dérivées</h5>
+				<p>
+					Pour calculer les dérivées nous avons deux méthodes, soit :
+					<ul>
+						<li>
+							Utiliser plusieurs fois la méthode vue en cours permettant de calculer la première dérivée, de cette manière, on peut calculer la <i>n ième</i> dérivé. Voici l’équation utilisée :
+							<br/>
+							LATEX
+						</li>
+						<li>
+							Utilise la méthode des différences finies centrées, cette méthode a une erreur proportionnelle au carré du pas (LATEX). La voici :
+							<br/>
+							LATEX
+					</ul>
+				</p>
 			</p>
-
+			<h4>Bonus</h4>
+			<p>
+				Il s’agit d’un problème d’optimisation, la réponse est qu’il ne faut traverser à aucun moment l’eau, le plus rapide étant de directement faire le tour du lac en remorque !
+				<br/>
+				<a href= » »>Ici la démonstration</a>
+			</p>
 			<h4>Conclusion</h4>
 			<p>
 				Cette méthode d'approximation peut converger très vite, et l’on évite beaucoup de cas problématiques grâce à notre première approche dichotomique des zéros.
@@ -119,6 +198,8 @@
                <a href="https://en.wikipedia.org/wiki/Finite_difference">Finite difference (Wikipedia)</a>
                </br>
                <a href="https://fr.wikipedia.org/wiki/Coefficient_binomial">Coefficient binomial (Wikipedia)</a>
+			   <br/>
+			   <a href="https://fr.wikipedia.org/wiki/M%C3%A9thode_de_Ruffini-Horner">Méthode de Ruffini-Horner</a>
             </p>
 		</div>
 
