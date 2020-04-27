@@ -79,11 +79,11 @@ function computeCosinus(n, h, I, dx, finitediff)
 		X.push(x);
         Dcos.push(cos.evaluate({x: x}));
         Dcosder.push(cosder.evaluate({x: x, h: h}));
-        //Dcosderder.push(cosderder.evaluate({x: x, h: h}));
+        Dcosderder.push(cosderder.evaluate({x: x, h: h}));
     }
     draw(X, Dcos, "cosinus from mac laurin (degree : " + n + ")", I);
     draw(X, Dcosder, "first derivative of cosinus", I);
-    //draw(X, Dcosderder, "second derivative of cosinus", I);
+    draw(X, Dcosderder, "second derivative of cosinus", I);
 }
 
 //f is the function, n = taylor pol. degree, h = h, a = where's the taylor pol. is centered,
