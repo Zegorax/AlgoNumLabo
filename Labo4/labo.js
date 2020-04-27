@@ -6,13 +6,15 @@ Date de développement :
 */
 
 //-------TEST---------
-//let f = math.parse('sin(x)');
-//let n = 7;
-//let h = 0.001;
-//let a = 0;
-//let I = {"a": -6.14, "b": 6.14};
-//let dx = 0.01;
-//let naive = true;
+/*
+let f = math.parse('sin(x)');
+let n = 7;
+let h = 0.001;
+let a = 0;
+let I = {"a": -6.14, "b": 6.14};
+let dx = 0.01;
+let finitediff = false;
+*/
 //--------------------
 //-------GRAPH--------
 var mainGraph;
@@ -56,7 +58,7 @@ function computeCosinus(n, h, I, dx, finitediff)
     }
     else {
         cosder = derivateFromNOrderFiniteCentralDifference(cos, 1);
-        coserder = derivateFromNOrderFiniteCentralDifference(cos, 2);
+        cosderder = derivateFromNOrderFiniteCentralDifference(cos, 2);
     }
 
 
@@ -77,11 +79,11 @@ function computeCosinus(n, h, I, dx, finitediff)
 		X.push(x);
         Dcos.push(cos.evaluate({x: x}));
         Dcosder.push(cosder.evaluate({x: x, h: h}));
-        Dcosderder.push(cosderder.evaluate({x: x, h: h}));
+        //Dcosderder.push(cosderder.evaluate({x: x, h: h}));
     }
     draw(X, Dcos, "cosinus from mac laurin (degree : " + n + ")", I);
     draw(X, Dcosder, "first derivative of cosinus", I);
-    draw(X, Dcosderder, "second derivative of cosinus", I);
+    //draw(X, Dcosderder, "second derivative of cosinus", I);
 }
 
 //f is the function, n = taylor pol. degree, h = h, a = where's the taylor pol. is centered,
@@ -141,7 +143,7 @@ function mainCompute()
 		optionF = f;
 	}
 
-	let optionN = parseFloat(document.getElementById("optionN").value);
+    let optionN = parseFloat(document.getElementById("optionN").value);
 	let optionH = parseFloat(document.getElementById("optionH").value);
 	let optionA = parseFloat(document.getElementById("optionA").value);
 	let optionI = {"a": parseFloat(document.getElementById("optionRangeStart").value), "b": parseFloat(document.getElementById("optionRangeEnd").value)};
@@ -161,8 +163,14 @@ function mainCompute()
 
 function mainComputeCosinus()
 {
+    let optionN = parseFloat(document.getElementById("optionN").value);
+    let optionH = parseFloat(document.getElementById("optionH").value);
+    let optionI = {"a": parseFloat(document.getElementById("optionRangeStart").value), "b": parseFloat(document.getElementById("optionRangeEnd").value)};
+    let optionDX = parseFloat(document.getElementById("optionDX").value);
+    let optionNaive = document.getElementById("checkOldMethod").checked;
+
 	needsRebuild = true;
-	computeCosinus(n, h, I, dx);
+	computeCosinus(optionN, optionH, optionI, optionDX, optionNaive);
 	mainGraph.update();
 }
 
@@ -338,7 +346,7 @@ function drawTaylor(d, a, I, dx)
     }
 
     //Draw the taylor polynomial
-    draw(X, Y, "Taylor polynomial of degree " + d.length + " centerd at " + a, I);
+    draw(X, Y, "Taylor polynomial of degree " + (d.length - 1) + " centerd at " + a, I);
 }
 
 // f is the function to draw, I is the interval where to draw the function and dx is the step

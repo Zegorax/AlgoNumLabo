@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8"/>
+	<title>AN_Labo2_Equipe1</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	</head>
+	<body>
+        <img style="padding-left : 25px;" src="img/shem.jpg"/>
+    <p>
+            \(
+        \[\begin{array}{l}
+        Le\,bateau\,traverce\,le\,lac\,circulaire\,C\,de\,rayon\,r\,en\,partant\,de\,B\\
+        pour\,aller\,en\,A,\,il\,va\,ensuite\,suivre\,l'arc\,a\,pour\,arriver\,au\,po{\mathop{\rm int}} \\
+        d'arriver \,D.\\
+        Le\,theorème\,du\,triangle\,inscrit\,dans\,un\,cercle\,nous\,montre\,que\,\alpha  = \frac{\pi }{2}\,et\,que\,\gamma  = 2\beta \\
+        Le\,triangle\,ABD\,est\,donc\,rectangle\,en\,A,\,on\,peut\,donc\,calculer\,l:\\
+        l = h\cos (\beta )\\
+        Comme\,a\,est\,un\,arc\,du\,cercle\,ayant\,\gamma \,comme\,angle\,au\,centre,\,il\,vaut:\\
+        a = \gamma r = 2r\beta\\
+        Soit\,T\,le\,temps\,totale\,du\,traject,\,\,\Delta T\,le\,temps\,d'attachage\,et\,de\,d'étachage\\
+        de\,la\,remorque,\,\widetilde v\,la\,vitesse\,en\,avec\,la\,remorque\,et\,v\,la\,vitesse\,en\,bateau.\\
+        Comme\,\widetilde v\,est\,deux\,fois\,plus\,grand\,que\,v\,on\,à:\\
+        \,\widetilde v = 2v\\
+        Le\,temps\,total\,T\,est\,la\,somme\,du\,temps\,des\,2\,troncons,\\
+        qui\,se\,calculent\,en\,divisant\,la\,longueur\,du\,troncon\,par\,la\\
+        vitesse\,sur\,le\,troncon,\,\,plus\,le\,temps\,d'attachage/d'étachage\\
+        T = \frac{l}{v} + \frac{a}{{\widetilde v}} + \Delta T\\
+         = \frac{{h\,\cos (\beta )}}{v} + \frac{{2\beta r}}{{\widetilde v}} + \Delta T\\
+         = \frac{{h\,\cos (\beta )}}{v} + \frac{{h\beta }}{{\widetilde v}} + \Delta T\\
+         = h(\frac{{\,\cos (\beta )}}{v} + \frac{\beta }{{\widetilde v}}) + \Delta T\\
+        On\,définit\,T\,comme\,une\,fonction\,de\,\beta :\\
+        T:[0;\frac{\pi }{2}] \to \mathbb{R}_*^ + \\
+        \beta\mapsto  h(\frac{{\,\cos (\beta )}}{v} + \frac{\beta }{{\widetilde v}}) + \Delta T\\
+        On\,cherche\,à\,mininimser\,le\,temps,\,donc\,le\,minimun\,globale\,de\,T(\beta)\\
+        {\beta_{\min }} = \min (T(\beta))\\
+        Pour\,trouver\,{\beta_{\min }},\,il\,faut\,comparer\,les\,valeurs\,de\,T\,en:\\
+         - extremums\\
+         - borne\,de\,l'{\mathop{\rm int}} ervale\,[0;\frac{\pi }{2}]\\
+        Comme\,T(\beta)\,est\,continue,\,les\,extremums\,se\,trouent\,aux\,points\,où\,la\,pente\,est\,nulle\\
+
+        \frac{\partial T(\beta )}{\partial \beta }=0\\
+
+        =h(\frac{\partial }{\partial \beta }\frac{cos(\beta )}{v}+\frac{\partial }{\partial \beta }\frac{\beta }{\alpha })+\frac{\partial }{\partial \beta }\Delta T=0\\
+
+        =h(-\frac{sin(\beta )}{v}+\frac{1}{\tilde{v}})+0=0\\
+
+        =h(\frac{1}{\tilde{v}}-\frac{sin(\beta_{1})}{v})=0\\
+
+        \Leftrightarrow \frac{1}{\tilde{v}}=\frac{sin(\beta _{1})}{v}\\
+
+        =\frac{1}{2v}=\frac{sin(\beta _{1})}{v}\\
+
+        \Leftrightarrow sin(\beta _{1})=\frac{1}{2}\\
+
+        \Leftrightarrow \beta _{1}=arcsin(\frac{1}{2})= \frac{\pi}{6}\\
+        Les\,autres \,\beta\,à\,comparer,\,sont\,les\,bornes\,de\,l'intervalle:\\
+
+        [0;\frac{\pi}{2}],\,ie.,\,\beta_{2}=0,\,\beta_{3}=\frac{\pi}{2}\\
+
+        t_{1}=T(\beta_{1})=h(\frac{cos(\beta_{1})}{v}+\frac{\beta_{1}}{\tilde{v}})+\triangle T=h(\frac{\sqrt{3}}{2v}+\frac{\pi}{6\tilde{v}})+\triangle T\\
+
+        t_{2}=T(\beta_{2})=h(\frac{cos(0)}{v}+\frac{0}{\tilde{v}})+\triangle T\\
+
+        =h(\frac{1}{v})+\triangle T\\
+
+
+        t_{3}=T(\beta_{3})=h(\frac{cos(\frac{\pi}{2})}{v}+\frac{\pi}{2\tilde{v}})+\triangle T\\
+
+        =h(\frac{\pi}{2\tilde{v}})+\triangle T\\
+
+        On\,divise\,tous\,les\,t\,par\,h,\,puis\,leurs\,soustraire\,\frac{{\Delta T}}{h},\\
+        ce\,qui\,ne\,change\,pas\,les\,comparaisons.\\
+        On\,remplace\,aussi\,\widehat v\,par\,2v\\
+        {\widetilde t_1} = \frac{{\sqrt 3 }}{{2v}} + \frac{\pi }{{12v}} = \frac{{6\sqrt 3  + \pi }}{{12v}}\\
+        {\widetilde t_2} = \frac{1}{v} = \frac{{12}}{{12v}}\\
+        {\widetilde t_3} = \frac{\pi }{{4v}} = \frac{{3\pi }}{{12v}}\\
+        Comme\,3\pi  < 12 < 6\sqrt 3  + \pi \\
+         \Leftrightarrow {\widetilde t_3} < {\widetilde t_1} < {\widetilde t_2}\\
+         \Leftrightarrow {t_3} < {t_1} < {t_2}\\
+        le\,temps\,minimum\,est\,donc\,{t_3},\\
+        le\,minimum\,est\,alors\,{\beta_3}\\
+        {\beta_min} = {\beta_3} = \frac{\pi }{2}\\
+        Conclusion:\\
+        Pour\,aller\,le\,plus\,vite,\,il\,faut\,directement\\
+        utiliser\,la\,remorque,\,puis\,faire\,le\,demi - tour\,du\,lac\\
+        jusqu'au\,point\,d'arriver \,et\,debarquer\,le\,bateau\\
+        dans\,l'eau.
+        \end{array}\]
+        \)
+    </p>
+    <script id="MathJax-script" src="js/tex-svg.js"></script>
+    </body>
+</html>
