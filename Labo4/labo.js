@@ -2,7 +2,7 @@
 Algorithmes Numériques
 Laboratoire #4 : Dérivation numérique
 Equipe 1 : Verardo Luca, Portmann Alexis, Marty Mathias
-Date de développement :
+Date de développement : 25.04.2020
 */
 
 //-------TEST---------
