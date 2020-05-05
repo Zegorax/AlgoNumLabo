@@ -41,28 +41,24 @@
         <h3>Rapport</h3>
 
         <h4>Introduction</h4>
+        <p>17 décimales après la virgule</p>
         <p>
-            17 décimales après la virgule
             Le but de ce laboratoire est de développer un programme permettant de calculer l’intégrale de 1/(x<sup>2</sup> + 1) sur l’intervalle [0 , 1]. Cette intégrale vaut pi.
-            <br/>
-            Le défi est d'avoir le temps d'exécution le plus court possible tout en trouvant pi à 17 décimales près.
+            <br/> Le défi est d'avoir le temps d'exécution le plus court possible tout en trouvant pi à 17 décimales près.
         </p>
 
         <h4>Utilisation</h4>
         <p>
             Il faut d'abord choisir le nombre de points que l’on va utiliser pour calculer l’intégrale définie, ensuite cliquer sur « calculer ».
-            <br/>
-            Le nombre d’itérations sur lesquelles sont fait les moyennes peut être modifier dans le code, c’est la variable <i>nbIteration</i>.
+            <br/> Le nombre d’itérations sur lesquelles sont fait les moyennes peut être modifier dans le code, c’est la variable <i>nbIteration</i>.
 
         </p>
 
         <h4>Fonctionnement</h4>
         <p>
             Nous avons choisi la méthode de Simpson pour son ordre d’erreur O(h<sup>4</sup>).
-            <br>
-            Cependant, les flottants de JavaScript ne permettent pas d’avoir une précision à 17 décimales. Nous sommes donc parties sur la library double.js, qui émule des flottants sur 128 bits (de base sur 64).
-            <br/>
-            Bien sûr, l’utilisation de cette library ralentie beaucoup l’algorithme, pour optimiser un peu, nous utilisons les méthodes statiques de la classe, qui comme expliqué sur le github de la library, sont plus rapides.
+            <br> Cependant, les flottants de JavaScript ne permettent pas d’avoir une précision à 17 décimales. Nous sommes donc parties sur la library double.js, qui émule des flottants sur 128 bits (de base sur 64).
+            <br/> Bien sûr, l’utilisation de cette library ralentie beaucoup l’algorithme, pour optimiser un peu, nous utilisons les méthodes statiques de la classe, qui comme expliqué sur le github de la library, sont plus rapides.
         </p>
 
         <h4>Bonus</h4>
@@ -70,19 +66,16 @@
             Voici notre représentation de pi :
             <br/>
             <img src="img/representation.png" id="representation">
-            <br/>
-            Chaque rectangle a une largeur proportionnelle au chiffre de pi qu'il représente. Sa couleur aussi est relative à son chiffre, variant du bleu pour 0 au rouge pour 9.
+            <br/> Chaque rectangle a une largeur proportionnelle au chiffre de pi qu'il représente. Sa couleur aussi est relative à son chiffre, variant du bleu pour 0 au rouge pour 9.
         </p>
 
         <h4>Conclusion</h4>
         <p>
             JavaScript n'est pas fait pour chercher des nombres avec de tel précisions, il est dommage d’utiliser une library tierce pour accomplir cette tâche.
-            <br/>
-            Un calcule d’erreur en partant de l'équation suivante :
+            <br/> Un calcule d’erreur en partant de l'équation suivante :
             <br/>
             <img src="img/eq.png" id="equation">
-            <br/>
-            Nous donne que la valeur de n devrait être au minimum 19109. Cependant, dans notre cas 205 suffit pour trouver le bon nombre de décimal.
+            <br/> Nous donne que la valeur de n devrait être au minimum 19109. Cependant, dans notre cas 205 suffit pour trouver le bon nombre de décimal.
         </p>
 
         <h4>Références</h4>
