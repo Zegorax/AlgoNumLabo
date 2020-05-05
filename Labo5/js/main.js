@@ -1,26 +1,41 @@
+let nbIteration = 1000;
+
+init();
+
+function init()
+{
+    document.getElementById("vanillaTime").innerHTML = "Temps de calcul  moyen sur " + nbIteration + " itérations : ";
+    document.getElementById("libTime").innerHTML = "Temps de calcul moyen sur " + nbIteration + " itérations : ";
+
+}
+
 function mainCompute() {
+
+    //Get n
+    let n = document.getElementById("valueN").value;
+
     let vanillaT0 = performance.now();
-    for (let n = 1; n < 1000; n++) {
-        Simpson(1000);
+    for (let n = 1; n < nbIteration; n++) {
+        Simpson(n);
     }
     let vanillaT1 = performance.now();
-    let vanillaTime = (vanillaT1 - vanillaT0) / 1000;
+    let vanillaTime = (vanillaT1 - vanillaT0) / nbIteration;
 
     let libT0 = performance.now();
-    for (let n = 1; n < 1000; n++) {
-        Simpson128bits(1000);
+    for (let n = 1; n < nbIteration; n++) {
+        Simpson128bits(n);
     }
     let libT1 = performance.now();
-    let libTime = (libT1 - libT0) / 1000;
+    let libTime = (libT1 - libT0) / nbIteration;
 
-    let vanillaResult = Simpson(1000);
-    let libResult = Simpson128bits(1000).toExponential(80);
+    let vanillaResult = Simpson(n);
+    let libResult = Simpson128bits(n).toExponential(80);
 
     document.getElementById("vanillaResult").innerHTML = "Résultat du calcul : " + vanillaResult;
     document.getElementById("libResult").innerHTML = "Résultat du calcul : " + libResult;
 
-    document.getElementById("vanillaTime").innerHTML = "Temps de calcul : " + vanillaTime + " millisecondes";
-    document.getElementById("libTime").innerHTML = "Temps de calcul : " + libTime + " millisecondes";
+    document.getElementById("vanillaTime").innerHTML = "Temps de calcul  moyen sur " + nbIteration + " itérations : " + vanillaTime + " millisecondes";
+    document.getElementById("libTime").innerHTML = "Temps de calcul moyen sur " + nbIteration + " itérations : " + libTime + " millisecondes";
 
 }
 

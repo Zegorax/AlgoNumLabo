@@ -10,21 +10,29 @@
 
 <body>
     <h1>Algorithmes numériques</h1>
-    <h2>Laboratoire #3 : Systèmes linéaires</h2>
+    <h2>Laboratoire #5 : Intégration</h2>
     <h2>Equipe 1 : Verardo Luca, Portmann Alexis, Marty Mathias</h2>
     <h2>Date de développement : 04.05.2020</h2>
 
+    <h4>Valeur de pi théorique avec 17 décimales après la virgule:</h4>
+    <p>3.14159265358979323</p>
+
     <h3>Calcul de pi</h3>
-    <h4>Avec précision à 15 décimales en vanilla JavaScript :</h4>
+    <h4>En utilisant le float de vanilla JavaScript :</h4>
     <p id="vanillaResult">Résultat du calcul : </p>
     <p id="vanillaTime">Temps de calcul :</p>
 
-    <h4>Avec précision à 80 décimales en utilisant une librairie JavaScript :</h4>
+    <h4>En utilisant la library double.js :</h4>
     <p id="libResult">Résultat du calcul : </p>
     <p id="libTime">Temps de calcul :</p>
 
-    <h4>Valeur de pi théorique :</h4>
-    <p>3.14159265358979323846264338327950288419716939937510582097494459230781640628620899</p>
+    <hr/>
+    <label>
+        Nombre d'échantillon (205 suffit pour trouver les 17 décimales) :
+        <input type="number" value=205 id="valueN"></number>
+    </label>
+
+    <br/>
 
     <button onclick="mainCompute()">Calculer</button>
 
@@ -34,39 +42,56 @@
 
         <h4>Introduction</h4>
         <p>
-            Le but de ce laboratoire est de développer un programme permettant de résoudre des systèmes d'équations linéaires en JS.<br/> Le défi est d'avoir le temps d'exécution le plus court possible.
+            17 décimales après la virgule
+            Le but de ce laboratoire est de développer un programme permettant de calculer l’intégrale de 1/(x<sup>2</sup> + 1) sur l’intervalle [0 , 1]. Cette intégrale vaut pi.
+            <br/>
+            Le défi est d'avoir le temps d'exécution le plus court possible tout en trouvant pi à 17 décimales près.
         </p>
 
         <h4>Utilisation</h4>
         <p>
-            Tout d'abord, il faut ouvrir un nouvel onglet de Firefox et taper <strong>about:config</strong> puis valider l'avertissement. Dans la barre de recherche, il faut taper <strong>security.fileuri.strict_origin_policy</strong> et double cliquer
-            sur l'option afin de la faire passer de <strong>true</strong> Ã  <strong>false</strong><br><br/> Les trois boutons permettant de (dâessayer) calculer la réponse au système dâéquations linéaires proposé par le laboratoire. Le temps de calcul
-            peut être long, car lâopération est répétée 1000 fois (Nombre de fois paramétrable) pour calculer une moyenne sur le temps dâexécution. Pour utiliser le programme sur nâimporte quel système linéaire :</br>
-            <ul>
-                <li>Ajouter le JSON au dossier data</li>
-                <li>Appeler la fonction javascript <i>compute(fileName)</i> en passant le nom du fichier JSON en paramètre</li>
-            </ul>
-        </p>
+            Il faut d'abord choisir le nombre de points que l’on va utiliser pour calculer l’intégrale définie, ensuite cliquer sur « calculer ».
+            <br/>
+            Le nombre d’itérations sur lesquelles sont fait les moyennes peut être modifier dans le code, c’est la variable <i>nbIteration</i>.
 
+        </p>
 
         <h4>Fonctionnement</h4>
         <p>
-            On commence par calculer la matrice triangulaire, pour ce faire on utilise la méthode du pivot de Gauss. On travaille ligne par ligne en commençant par en haut. Pour chaque ligne, on travail colonne par colonne pour arriver Ã  la ligne finale.<br/>            Si on tombe sur un zéro sur la diagonale, on va <i>swaper</i> la ligne courante avec la première ligne de la matrice telle que son élément sur la même colonne ne soit pas nul (si lâon ne trouve pas, une colonne entière est nulle et donc
-            le système nâa pas de solution)
-            <h4>Conclusion</h4>
-            <p>
-                Cette méthode est beaucoup plus rapide que la méthode de Cramer. En utilisant correctement la mémoÃ¯sation , on peut encore réduire le nombre de calculs.<br/> Il faut cependant quand même faire attention au cas spécifique ou le déterminant
-                vaut 0.<br/> Pour encore aller plus loin, on pourrait paralléliser les calcules de somme de deux matrices lignes (fait de multiple fois dans le programme) grâce Ã  Â« <i>Single instruction multiple data</i> Â» ou <strong>SIMD</strong>.<br/>                Cela permet de calculer la somme de tous les éléments de deux tableaux en en prenant plusieurs Ã  la fois â¦ (<a href="https://fr.wikipedia.org/wiki/Single_instruction_multiple_data">SIMD</a>)
-            </p>
+            Nous avons choisi la méthode de Simpson pour son ordre d’erreur O(h<sup>4</sup>).
+            <br>
+            Cependant, les flottants de JavaScript ne permettent pas d’avoir une précision à 17 décimales. Nous sommes donc parties sur la library double.js, qui émule des flottants sur 128 bits (de base sur 64).
+            <br/>
+            Bien sûr, l’utilisation de cette library ralentie beaucoup l’algorithme, pour optimiser un peu, nous utilisons les méthodes statiques de la classe, qui comme expliqué sur le github de la library, sont plus rapides.
+        </p>
 
-            <h4>Références</h4>
-            <p>
-                <ul>
-                    <li><a href="https://fr.wikipedia.org/wiki/Single_instruction_multiple_data">Single instruction multiple data</a></li>
-                    <li><a href="https://fr.wikipedia.org/wiki/M%C3%A9mo%C3%AFsation">MémoÃ¯sation</a></li>
-                    <li><a href="https://stackoverflow.com/questions/19706046/how-to-read-an-external-local-json-file-in-javascript">Ouvrire un fichier JSON</a></li>
-                </ul>
-            </p>
+        <h4>Bonus</h4>
+        <p>
+            Voici notre représentation de pi :
+            <br/>
+            <img src="img/representation.png" id="representation">
+            <br/>
+            Chaque rectangle a une largeur proportionnelle au chiffre de pi qu'il représente. Sa couleur aussi est relative à son chiffre, variant du bleu pour 0 au rouge pour 9.
+        </p>
+
+        <h4>Conclusion</h4>
+        <p>
+            JavaScript n'est pas fait pour chercher des nombres avec de tel précisions, il est dommage d’utiliser une library tierce pour accomplir cette tâche.
+            <br/>
+            Un calcule d’erreur en partant de l'équation suivante :
+            <br/>
+            <img src="img/eq.png" id="equation">
+            <br/>
+            Nous donne que la valeur de n devrait être au minimum 19109. Cependant, dans notre cas 205 suffit pour trouver le bon nombre de décimal.
+        </p>
+
+        <h4>Références</h4>
+        <p>
+            <ul>
+                <li><a href="https://github.com/munrocket/double.js">double.js</a></li>
+                <li><a href="https://fr.wikipedia.org/wiki/M%C3%A9thode_de_Simpson">Méthode de Simpson (Wikipedia)</a></li>
+            </ul>
+        </p>
     </div>
 
     <script type="text/javascript" src="js/main.js"></script>
