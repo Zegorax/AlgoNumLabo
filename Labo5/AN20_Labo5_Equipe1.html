@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AN20_Labo5_Equipe1</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="js/double.js"></script>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <h1>Algorithmes numériques</h1>
+    <h2>Laboratoire #5 : Intégration</h2>
+    <h2>Equipe 1 : Verardo Luca, Portmann Alexis, Marty Mathias</h2>
+    <h2>Date de développement : 04.05.2020</h2>
+
+    <h4>Valeur de pi théorique avec 17 décimales après la virgule:</h4>
+    <p>3.14159265358979323</p>
+
+    <h3>Calcul de pi</h3>
+    <h4>En utilisant le float de vanilla JavaScript :</h4>
+    <p id="vanillaResult">Résultat du calcul : </p>
+    <p id="vanillaTime">Temps de calcul :</p>
+
+    <h4>En utilisant la librairie double.js :</h4>
+    <p id="libResult">Résultat du calcul : </p>
+    <p id="libTime">Temps de calcul :</p>
+
+    <hr/>
+    <label>
+        Nombre d'échantillon (205 suffit pour trouver les 17 décimales) :
+        <input type="number" value=205 id="valueN"></number>
+    </label>
+
+    <br/>
+
+    <button onclick="mainCompute()">Calculer</button>
+
+    <div class="rapport">
+
+        <h3>Rapport</h3>
+
+        <h4>Introduction</h4>
+        <p>17 décimales après la virgule</p>
+        <p>
+            Le but de ce laboratoire est de développer un programme permettant de calculer l’intégrale de 1/(x<sup>2</sup> + 1) sur l’intervalle [0 , 1]. Cette intégrale vaut pi.
+            <br/> Le défi est d'avoir le temps d'exécution le plus court possible tout en trouvant pi à 17 décimales près.
+        </p>
+
+        <h4>Utilisation</h4>
+        <p>
+            Il faut d'abord choisir le nombre de points que l’on va utiliser pour calculer l’intégrale définie, ensuite cliquer sur « calculer ».
+            <br/> Le nombre d’itérations sur lesquelles sont fait les moyennes peut être modifier dans le code, c’est la variable <i>nbIteration</i>.
+
+        </p>
+
+        <h4>Fonctionnement</h4>
+        <p>
+            Nous avons choisi la méthode de Simpson pour son ordre d’erreur O(h<sup>4</sup>).
+            <br> Cependant, les flottants de JavaScript ne permettent pas d’avoir une précision à 17 décimales. Nous sommes donc parties sur la library double.js, qui émule des flottants sur 128 bits (de base sur 64).
+            <br/> Bien sûr, l’utilisation de cette library ralentie beaucoup l’algorithme, pour optimiser un peu, nous utilisons les méthodes statiques de la classe, qui comme expliqué sur le github de la library, sont plus rapides.
+        </p>
+
+        <h4>Bonus</h4>
+        <p>
+            Voici notre représentation de pi :
+            <br/>
+            <img src="img/representation.png" id="representation">
+            <br/> Chaque rectangle a une largeur proportionnelle au chiffre de pi qu'il représente. Sa couleur aussi est relative à son chiffre, variant du bleu pour 0 au rouge pour 9.
+        </p>
+
+        <h4>Conclusion</h4>
+        <p>
+            JavaScript n'est pas fait pour chercher des nombres avec de telles précisions, il est dommage d’utiliser une librairie tierce pour accomplir cette tâche.
+            <br/> Un calcule d’erreur en partant de l'équation suivante :
+            <br/>
+            <img src="img/eq.png" id="equation">
+            <br/> Nous donne que la valeur de n devrait être au minimum 19109. Cependant, dans notre cas 205 suffit pour trouver le bon nombre de décimal.
+        </p>
+
+        <h4>Références</h4>
+        <p>
+            <ul>
+                <li><a href="https://github.com/munrocket/double.js">double.js</a></li>
+                <li><a href="https://fr.wikipedia.org/wiki/M%C3%A9thode_de_Simpson">Méthode de Simpson (Wikipedia)</a></li>
+            </ul>
+        </p>
+    </div>
+
+    <script type="text/javascript" src="js/main.js"></script>
+</body>
+
+</html>
