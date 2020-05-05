@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8"/>
+	<title>AN_Labo4_Equipe1</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	</head>
+	<body>
+		<div class="app">
+			<h1>Algorithmes Numériques</h1>
+			<h2>Laboratoire #4 : Dérivation numérique</h2>
+			<h3>Equipe 1 : Verardo Luca, Portmann Alexis, Marty Mathias</h3>
+			<h3>Date de développement : 25.04.2020</h3>
+
+			<br>
+			<h2>Paramètres</h2>
+			<div class="form-group col-10">
+				<div class="form-group row">
+					<label for="example-number-input" class="col-5 col-form-label">h </label>
+					<div class="col-3">
+						<input id="optionH" class="form-control" type="number" value="0.001" step="0.001" id="example-number-input">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-number-input" class="col-5 col-form-label">Range start</label>
+					<div class="col-3">
+						<input id="optionRangeStart" class="form-control" type="number" value="-3.14" step="0.01" id="example-number-input">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-number-input" class="col-5 col-form-label">Range end</label>
+					<div class="col-3">
+						<input id="optionRangeEnd" class="form-control" type="number" value="3.14" step="0.01" id="example-number-input">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-number-input" class="col-5 col-form-label">Step beteween two computed points	</label>
+					<div class="col-3">
+						<input id="optionDX" class="form-control" type="number" value="0.01" step="0.01" id="example-number-input">
+					</div>
+				</div>
+			</div>
+				<div class="form-check mb-2 mr-sm-2 mb-sm-0">
+					<label class="form-check-label">
+						<input class="form-check-input" id="checkOldMethod" type="checkbox" checked>Derivate using the polynomial of degree 4 method
+					</label>
+				</div>
+			<h2>N'importe quelle fonction</h2>
+			<p>
+				<label>\(f(x)\) =
+				<input type="text" id="inputSpecificFunction" value="x">
+				</label>
+			</p>
+			<p>
+				<label id="labelSpecificFunction"></label>
+			</p>
+			<div class="form-group col-10">
+				<div class="form-group row">
+					<label for="example-number-input" class="col-5 col-form-label">Taylor polynomial degree</label>
+					<div class="col-3">
+						<input id="optionN" class="form-control" type="number" value="4" id="example-number-input">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-number-input" class="col-5 col-form-label">Center of polynomial developement</label>
+					<div class="col-3">
+						<input id="optionA" class="form-control" type="number" value="0" id="example-number-input">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-number-input" class="col-5 col-form-label">Derivatives to compute (example : "1, 5")</label>
+					<div class="col-3">
+						<input id="optionDerivatives" class="form-control" type="text" value="1,2">
+					</div>
+				</div>
+			</div>
+			<button id="mainComputeButton" class="btn btn-danger" onclick="mainCompute()">Afficher</button>
+
+			<br>
+			<br>
+			<h2>Cosinus avec Maclaurin développé</h2>
+			<button class="btn btn-primary" onclick="mainComputeCosinus()">Afficher</button>
+			<canvas id="chart" width="600">
+			</div>
+		</div>
+
+		<div class="rapport">
+			<h3>Utilisation</h3>
+			<p>
+				Deux versions sont possibles :
+				<ul>
+				<li>
+					Affichage du graphe du cosinus et de ses deux premières dérivé sans utiliser de fonction trigonométrique.
+				</li>
+				<li>
+					Affichage d’une fonction, du polynôme de Taylor et de dérivées. Explication des différentes options :
+					<ul>
+					<li>
+						<strong>f(x)</strong>, fonction à utiliser
+					</li>
+					<li>
+						<strong>Taylor polynomial degree</strong>, degré du polynôme de Taylor
+					</li>
+					<li>
+						<strong>h</strong>, facteur de précision h
+					</li>
+					<li>
+						<strong>Center of polynomial development</strong>, correspond au <i>a</i> dans la formule du polynôme de Taylor
+					</li>
+					<li>
+						<strong>Range start / Range end</strong>, intervalle sur lequel calculer la fonction, ses dérivées et son polynôme de Taylor
+					</li>
+					<li>
+						<strong>Step between two computed points</strong>, intervalle de discrétisation de l’affichage des fonctions
+					</li>
+					<li>
+						<strong>Derivative to compute</strong>, liste des degrés des dérivées à calculer
+					</li>
+					</ul>
+				</li>
+				</ul>
+			</p>
+			<p>
+				Deux comportements possibles pour le calcul d’une dérivée, changeable grâce au bouton <i>Derivate using the polynomial of degree 4 method</i>.
+				Si la case est cochée, les dérivés se calculeront en appliquant plusieurs fois la méthode venant du développement en polynôme de Taylor de degré 4.
+				Si la case n’est pas cochée, les dérivés se calculeront à l’aide de la méthode des différences finies, cette méthode généralise la méthode du point du milieu.
+			</p>
+			<p style="color:red;">
+				Attention, le calcul de dérivée de degré 5 ou plus sans utiliser la méthode des différences finies est très long. Il n’est pas recommandé d’utiliser cette méthode pour ce genre de degré
+			</p>
+			<h3>Rapport</h3>
+
+			<h4>Contexte</h4>
+			<p>
+				<p>
+					Le but du laboratoire est d’afficher la fonction <i>cos(x)</i> et ses deux premières dérivés, sans utiliser une seule fonction trigonométrique.
+				<br/>
+					Pour rendre le laboratoire plus intéressant, nous avant ajouté la possibilité de calculer n’importe quelle dérivée, et le polynôme de Taylor de n’importe quelle fonction en utilisant deux méthodes distinctes pour le calcule de dérivé.
+				</p>
+
+			</p>
+			<h4>Méthode</h4>
+			<p>
+				<h5>Math en général</h5>
+				<p>
+					Pour gérer les fonctions et leurs évaluations (à part l’évaluation du polynôme de Taylor), nous utilisons une libraire, <i>mathjs</i>, qui permet de gérer des expressions mathématiques en transformant une chaine de caractère représentant notre fonction en arbre d’opérateurs et d’opérandes.
+				</p>
+				<h5>Affichage du cosinus et de ses dérivés</h5>
+				<p>
+					Pour afficher le cosinus, nous avons développé le polynôme de Maclaurin connue du cosinus, pour afficher ses deux premières dérivées, nous avons choisi de dériver le polynôme de Maclaurin.
+					<br/>
+					Nous aurions aussi pu afficher le polynôme de Maclaurin du cosinus (dérivé) et l’opposé du polynôme de la fonction cosinus déjà calculée (dérivé seconde) car :
+					<p>\({cos(x)}' = -sin(x)\)</p>
+					<p>\({cos(x)}'' = -cos(x)\)</p>
+					<p>
+						Nous avons préféré calculer les dérivées en utilisant les méthodes d’approximation vues en cours.
+					</p>
+				</p>
+				<h5>Calcule du polynôme de Taylor</h5>
+				<p>
+					L’évaluation du polynôme de Taylor est optimisée en utilisant la méthode de <i>Ruffni-Horner</i>, elle permet de réduire le nombre de multiplications à effectuer. La voici :</p>
+ 					<p>\({\displaystyle P(x_{0})=((\dots ((a_{n}x_{0}+a_{n-1})x_{0}+a_{n-2})x_{0}+\dots )x_{0}+a_{1})x_{0}+a_{0}}\)</p>
+				</p>
+				<h5>Calcul des dérivées</h5>
+				<p>
+					Pour calculer les dérivées nous avons deux méthodes, soit :
+					<ul>
+						<li>
+							Utiliser plusieurs fois la méthode vue en cours permettant de calculer la première dérivée, de cette manière, on peut calculer la <i>n ième</i> dérivé. Voici l’équation utilisée :
+							<p>\(f^{\prime}(x)=\frac{8\left(f\left(x+\frac{h}{2}\right)-f\left(x-\frac{h}{2}\right)\right)-f(x+h)+f(x-h)}{6 h}+O\left(h^{4}\right)\)</p>
+						</li>
+						<li>
+							Utilise la méthode des différences finies centrées, cette méthode a une erreur proportionnelle au carré du pas. La voici :
+							<p>\(\frac{d^{n} f}{d x^{n}}(x)=\frac{\delta_{h}^{n}[f](x)}{h^{n}}+O\left(h^{2}\right)\)</p>
+							<p>Avec :</p>
+							<p>\(\delta_{h}^{n}[f](x)=\sum_{i=0}^{n}(-1)^{i}\left(\begin{array}{l}n\\i\end{array}\right) f\left(x+\left(\frac{n}{2}-i\right) h\right)\)</p>
+					</ul>
+				</p>
+			</p>
+			<h4>Bonus</h4>
+			<p>
+				Il s’agit d’un problème d’optimisation, la réponse est qu’il ne faut traverser à aucun moment l’eau, le plus rapide étant de directement faire le tour du lac en remorque !
+				<br/>
+				<a href="soluce.html">Ici la démonstration</a>
+			</p>
+			<h4>Conclusion</h4>
+			<p>
+				Cette méthode d'approximation peut converger très vite, et l’on évite beaucoup de cas problématiques grâce à notre première approche dichotomique des zéros.
+			</p>
+			<h4>Références</h4>
+            <p>
+               <a href="https://mathjs.org/docs/expressions/expression_trees.html">Math js</a>
+               </br>
+               <a href="https://en.wikipedia.org/wiki/Taylor_series">Taylor series (Wikipedia)</a>
+               </br>
+               <a href="https://en.wikipedia.org/wiki/Finite_difference">Finite difference (Wikipedia)</a>
+               </br>
+               <a href="https://fr.wikipedia.org/wiki/Coefficient_binomial">Coefficient binomial (Wikipedia)</a>
+			   <br/>
+			   <a href="https://fr.wikipedia.org/wiki/M%C3%A9thode_de_Ruffini-Horner">Méthode de Ruffini-Horner</a>
+            </p>
+		</div>
+
+		<script src="js/jquery-3.3.1.js"></script>
+		<script src="js/bootstrap-slider.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+		<script src="chart.js"></script>
+		<script src="annotation-plugin.js"></script>
+		<script id="MathJax-script" src="js/tex-svg.js"></script>
+		<script src="js/math.js"></script>
+		<script src="labo.js"></script>
+	</body>
+</html>

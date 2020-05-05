@@ -1,0 +1,46 @@
+
+body {
+    margin: 0;
+}
+
+.rapport{
+        margin-left: 10px;
+}
+
+.center {
+  text-align: center;
+}
+
+.app {
+    padding: 30px;
+}
+.app h1 {
+    margin: 0;
+}
+.app h2 {
+    margin: 0 0 20px 0;
+}
+
+h3{
+    margin-left: 20px;
+}
+
+h4{
+    margin-left: 30px;
+}
+
+h5{
+    margin-left: 35px;
+}
+
+p{
+    margin-left: 35px;
+}
+
+#binary-checkboxes {
+    margin: 20px 0;
+}
+
+#add-input-result {
+    color: #000;
+}
